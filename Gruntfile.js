@@ -16,7 +16,8 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>',
+        'lib/*.js',
+        '<%= nodeunit.tests %>'
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -30,22 +31,28 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     stencil: {
-      default_options: {
+      task: {
         options: {
+          dot_template_settings: {strip: false},
+          dot_it_object: {
+            selfstanding_msg: "I am a page that is not wrapped in a template.",
+            template_msg:     "I am a page that has meta data which says I need to be wrapped in a template.",
+            file_lists: {
+              stylesheets: [{cwd: '.'},'test/data/styles/*.css']
+            }
+          }
         },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+        files: [
+          {
+            expand: true,
+            cwd: 'test/data/',
+            src: ['pages/*'],
+            dest: 'tmp/',
+            ext: '.html',
+            flatten: true
+          }
+        ]
+      }
     },
 
     // Unit tests.
@@ -68,6 +75,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'stencil', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['clean', 'jshint', 'stencil']);
 
 };
