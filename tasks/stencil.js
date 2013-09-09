@@ -41,19 +41,19 @@ module.exports = function(grunt) {
       // Check there is a 1:1 src-dest mapping
       validate_mapping(mapping);
 
+      // Compile the source of the input file
+      var src = compile(get_template_path, it, mapping.src[0]);
+
       // Write the destination file.
-      //grunt.file.write(mapping.dest, src);
+      grunt.file.write(mapping.dest, src);
 
       // Print a success message.
       grunt.log.writeln('File ' + mapping.dest.cyan + ' created.');
     });
   });
 
-  // Compile a single template file to a single output destination file
-  function compile_template (get_template_path, it, dest, src_path) {
-    var output_file = grunt.file.isDir(dest)
-                      ? lib.html_filepath(dest, src_path)
-                      : dest;
+  // Compile the source of an input file
+  function compile (get_template_path, it, src_path) {
     var src = grunt.file.read(src_path);
 
     var meta = lib.try_and_report(function () {
@@ -72,11 +72,7 @@ module.exports = function(grunt) {
       return wrap(get_template_path, document, it);
     }, 'Error processing template', it.template);
 
-
-    grunt.file.write(output_file, document);
-
-    // Log
-    grunt.log.writeln('File ' + output_file.cyan + ' created.');
+    return document;
   }
 
   function wrap (get_template_path, document, it) {
@@ -88,13 +84,13 @@ module.exports = function(grunt) {
     var template;
 
     if (it.template) {
+      console.log("We have a page that wants a template");
       _.extend(it, { document: document });
 
       template = lib.fold_fns(it.template,
                               get_template_path,
                               grunt.file.read,
                               dot.template);
-
       return template(it);
     } else {
       return document;
