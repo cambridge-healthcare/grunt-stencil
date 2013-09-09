@@ -1,0 +1,42 @@
+{
+  "name": "grunt-stencil",
+  "description": "A Grunt plugin to generate static HTML files from given components.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cambridge-healthcare/grunt-stencil",
+  "author": {
+    "name": "Cambridge Healthcare",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cambridge-healthcare/grunt-stencil.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cambridge-healthcare/grunt-stencil/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/cambridge-healthcare/grunt-stencil/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
