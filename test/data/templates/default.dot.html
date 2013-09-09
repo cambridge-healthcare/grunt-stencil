@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>{{= it.page_title }}</title>
+
+    {{~it.file_lists.stylesheets :src}}
+    <link rel="stylesheet" type="text/css" href="{{= src }}">
+    {{~}}
+
+  </head>
+  <body>
+    {{= it.page_description}}
+    {{= it.document }}
+  </body>
+
+</html>
