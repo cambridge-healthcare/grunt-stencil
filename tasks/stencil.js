@@ -9,6 +9,7 @@
 'use strict';
 var _ = require('underscore');
 var lib = require('../lib/lib.js');
+var err = require('../lib/error_handling.js');
 
 module.exports = function(grunt) {
 
@@ -29,7 +30,7 @@ module.exports = function(grunt) {
     this.files.forEach(function(mapping) {
 
       // Check there is a 1:1 src-dest mapping
-      lib.validate_mapping(mapping);
+      err.validate_mapping(mapping);
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
