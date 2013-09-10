@@ -7,7 +7,6 @@
  */
 
 'use strict';
-var dot = require('dot');
 var _ = require('underscore');
 var lib = require('../lib/lib.js');
 
