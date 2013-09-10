@@ -10,6 +10,7 @@
 var _ = require('underscore');
 var util = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
+var err_msgs = require('../lib/error_messages.js');
 
 module.exports = function(grunt) {
 
@@ -30,7 +31,7 @@ module.exports = function(grunt) {
     this.files.forEach(function(mapping) {
 
       // Check there is a 1:1 src-dest mapping
-      err.validate_mapping(mapping);
+      err.fail(mapping.src.length > 1, err_msgs.mapping_cardinality);
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
