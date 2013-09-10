@@ -8,7 +8,7 @@
 
 'use strict';
 var _ = require('underscore');
-var lib = require('../lib/lib.js');
+var util = require('../lib/utils.js');
 var err = require('../lib/error_handling.js');
 
 module.exports = function(grunt) {
@@ -48,13 +48,13 @@ module.exports = function(grunt) {
   function compile (input_file, options) {
 
     // Define a dot template compiler based on given options
-    var dot_compiler = lib.compile_dot.bind(null,
+    var dot_compiler = util.compile_dot.bind(null,
                                             options.dot_template_settings,
                                             options.meta_data_sep);
 
     // Build the it object and add meta data if we find some
-    var it = lib.prepare_it_obj(options.dot_it_object);
-    _.extend(it, lib.meta_data(input_file, options.meta_data_sep));
+    var it = util.prepare_it_obj(options.dot_it_object);
+    _.extend(it, util.meta_data(input_file, options.meta_data_sep));
 
     // Compile dot template using it object
     var doc = dot_compiler(input_file, it);
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     // compile it with the document passed in the it object
     var parent_template;
     if (it.template) {
-      parent_template = lib.find_closest_match(options.templates_folder, it.template);
+      parent_template = util.find_closest_match(options.templates_folder, it.template);
       _.extend(it, { document: doc });
       doc = dot_compiler(parent_template, it);
     }
