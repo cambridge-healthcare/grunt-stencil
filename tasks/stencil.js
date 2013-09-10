@@ -10,7 +10,6 @@
 var _ = require('underscore');
 var util = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
-var err_msgs = require('../lib/error_messages.js');
 
 module.exports = function(grunt) {
 
@@ -31,7 +30,7 @@ module.exports = function(grunt) {
     this.files.forEach(function(mapping) {
 
       // Check there is a 1:1 src-dest mapping
-      err.fail(mapping.src.length > 1, err_msgs.mapping_cardinality);
+      err.fail(mapping.src.length > 1, err.msgs.mapping_cardinality);
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
@@ -50,8 +49,8 @@ module.exports = function(grunt) {
 
     // Define a dot template compiler based on given options
     var dot_compiler = util.compile_dot.bind(null,
-                                            options.dot_template_settings,
-                                            options.meta_data_sep);
+                                             options.dot_template_settings,
+                                             options.meta_data_sep);
 
     // Build the it object and add meta data if we find some
     var it = util.prepare_it_obj(options.dot_it_object);
