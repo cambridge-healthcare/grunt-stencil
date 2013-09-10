@@ -84,7 +84,6 @@ module.exports = function(grunt) {
     var template;
 
     if (it.template) {
-      console.log("We have a page that wants a template");
       _.extend(it, { document: document });
 
       template = lib.fold_fns(it.template,
