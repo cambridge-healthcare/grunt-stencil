@@ -35,6 +35,7 @@ module.exports = function(grunt) {
         options: {
           dot_template_settings: {strip: false},
           dot_it_object: {
+            selfstanding_title: "Stencil-generated self-standing page",
             selfstanding_msg: "I am a page that is not wrapped in a template.",
             template_msg:     "I am a page that has meta data which says I need to be wrapped in a template.",
             file_lists: {
@@ -75,6 +76,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'stencil', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['clean', 'jshint', 'stencil']);
+  grunt.registerTask('default', ['jshint', 'test']);
 
 };
