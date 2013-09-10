@@ -9,7 +9,7 @@
 'use strict';
 var _ = require('underscore');
 var util = require('../lib/utils.js');
-var err = require('../lib/error_handling.js');
+var err = require('../lib/error_handlers.js');
 
 module.exports = function(grunt) {
 
