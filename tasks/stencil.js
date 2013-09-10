@@ -21,6 +21,7 @@ module.exports = function(grunt) {
       dot_it_object: {
         file_lists: {}
       },
+      meta_data_sep: '\n\n',
       templates_folder: '',
     });
 
@@ -47,24 +48,24 @@ module.exports = function(grunt) {
   function compile (input_file, options) {
 
     // Define a dot template compiler based on given template settings
-    var dot_compiler = lib.compile_dot.bind(null, options.dot_template_settings);
+    var dot_compiler = lib.compile_dot.bind(null, options.dot_template_settings, options.meta_data_sep);
 
     // Build the it object and add meta data if we find some
     var it = lib.prepare_it_obj(options.dot_it_object);
-    _.extend(it, lib.meta_data(input_file));
+    _.extend(it, lib.meta_data(input_file, options.meta_data_sep));
 
     // Compile dot template using it object
-    var document = dot_compiler(input_file, it);
+    var doc = dot_compiler(input_file, it);
 
     // In case a parent template is defined in the meta data,
     // compile it with the document passed in the it object
     var parent_template;
     if (it.template) {
       parent_template = lib.find_closest_match(options.templates_folder, it.template);
-      _.extend(it, { document: document });
-      document = dot_compiler(parent_template, it);
+      _.extend(it, { document: doc });
+      doc = dot_compiler(parent_template, it);
     }
 
-    return document;
+    return doc;
   }
 };
