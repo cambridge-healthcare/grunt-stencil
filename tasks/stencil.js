@@ -13,7 +13,7 @@ var lib = require('../lib/lib.js');
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('stencil', 'A Grunt plugin to generate static HTML files from given components.', function() {
+  grunt.registerMultiTask('stencil', 'An HTML builder.', function() {
 
     // Define default options
     var options = this.options({
@@ -47,8 +47,10 @@ module.exports = function(grunt) {
   // Compile the source of an input file
   function compile (input_file, options) {
 
-    // Define a dot template compiler based on given template settings
-    var dot_compiler = lib.compile_dot.bind(null, options.dot_template_settings, options.meta_data_sep);
+    // Define a dot template compiler based on given options
+    var dot_compiler = lib.compile_dot.bind(null,
+                                            options.dot_template_settings,
+                                            options.meta_data_sep);
 
     // Build the it object and add meta data if we find some
     var it = lib.prepare_it_obj(options.dot_it_object);
