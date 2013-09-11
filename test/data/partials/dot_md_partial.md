@@ -3,5 +3,3 @@
 {{= it.dot_msg }}
 
 As a final step, the file should be compiled from md to HTML.
-
-{{= it.include('test/data/partials/html_partial') }}
