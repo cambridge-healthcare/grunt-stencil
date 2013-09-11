@@ -10,6 +10,8 @@
 var _ = require('underscore');
 var utils = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
+var md = require('marked');
+
 
 module.exports = function(grunt) {
 
@@ -56,6 +58,8 @@ module.exports = function(grunt) {
     var base_folder = is_page ? '' : options.partials_folder;
     input_file = utils.find_closest_match(base_folder, input_file);
 
+    console.log("Now compiling " + input_file);
+
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
                                               _.clone(options.dot_template_settings),
@@ -68,6 +72,12 @@ module.exports = function(grunt) {
 
     // Compile dot template using it object
     var doc = dot_compiler(input_file, it);
+
+    // If we're dealing with markdown,
+    // process doc one more time to get HTML
+    if (/\.md$/.test(input_file)) {
+      doc = md(doc);
+    }
 
     // In case a parent template is defined in a page's meta data
     // compile it with the document passed in the it object
