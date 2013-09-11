@@ -8,7 +8,7 @@
 
 'use strict';
 var _ = require('underscore');
-var util = require('../lib/utils.js');
+var utils = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
 
 module.exports = function(grunt) {
@@ -22,8 +22,12 @@ module.exports = function(grunt) {
         file_lists: {}
       },
       meta_data_sep: '\n\n',
-      templates_folder: ''
+      templates_folder: '',
+      partials_folder: ''
     });
+
+    // Prepare the it object for dot
+    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object);
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -48,13 +52,13 @@ module.exports = function(grunt) {
   function compile (input_file, options) {
 
     // Define a dot template compiler based on given options
-    var dot_compiler = util.compile_dot.bind(null,
-                                             options.dot_template_settings,
-                                             options.meta_data_sep);
+    var dot_compiler = utils.compile_dot.bind(null,
+                                              options.dot_template_settings,
+                                              options.meta_data_sep);
 
     // Build the it object and add meta data if we find some
-    var it = util.prepare_it_obj(options.dot_it_object);
-    _.extend(it, util.meta_data(input_file, options.meta_data_sep));
+    var it = _.extend(options.dot_it_object,
+                      utils.meta_data(input_file, options.meta_data_sep));
 
     // Compile dot template using it object
     var doc = dot_compiler(input_file, it);
@@ -63,7 +67,7 @@ module.exports = function(grunt) {
     // compile it with the document passed in the it object
     var parent_template;
     if (it.template) {
-      parent_template = util.find_closest_match(options.templates_folder, it.template);
+      parent_template = utils.find_closest_match(options.templates_folder, it.template);
       _.extend(it, { document: doc });
       doc = dot_compiler(parent_template, it);
     }
