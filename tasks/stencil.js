@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         file_lists: {}
       },
       meta_data_sep: '\n\n',
-      templates_folder: '',
+      templates_folder: ''
     });
 
     // Iterate over all specified file groups.
