@@ -27,8 +27,8 @@ module.exports = function(grunt) {
     });
 
     // Prepare the it object for dot
-    options.dot_it_object = utils.prepare_it_obj(options);
-    //console.log(options.dot_it_object);
+    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
+                                                 compile.bind(null, options));
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
-      var compiled_src = compile(input_file, options);
+      var compiled_src = compile(options, input_file, true);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
@@ -50,9 +50,10 @@ module.exports = function(grunt) {
   });
 
   // Compile the source of an input file
-  function compile (input_file, options) {
-
-    console.log("\n Now compiling " + input_file.cyan)
+  function compile (options, input_file, is_page) {
+    console.log("\nInclude has been called on " + input_file.cyan + (is_page ? ", which is a page!" : ""));
+    console.log("Initial it: ");
+    console.log(options.dot_it_object);
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
@@ -62,14 +63,19 @@ module.exports = function(grunt) {
     // Build the it object and add meta data if we find some
     var it = _.extend(options.dot_it_object,
                       utils.meta_data(input_file, options.meta_data_sep));
+    console.log("It after meta data:")
+    console.log(it);
 
     // Compile dot template using it object
     var doc = dot_compiler(input_file, it);
 
+    console.log("Now back to " + input_file)
+
     // In case a parent template is defined in the meta data,
     // compile it with the document passed in the it object
     var parent_template;
-    if (it.template) {
+    if (it.template && is_page) {
+      console.log(input_file + " DID have a template specified!!");
       parent_template = utils.find_closest_match(options.templates_folder, it.template);
       _.extend(it, { document: doc });
       doc = dot_compiler(parent_template, it);
