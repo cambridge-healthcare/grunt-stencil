@@ -53,14 +53,14 @@ module.exports = function(grunt) {
   function compile (options, input_file, is_page) {
 
     // First make sure we have the full path
-    input_file = is_page
-                 ? input_file
-                 : utils.find_closest_match(options.partials_folder, input_file);
+    var base_folder = is_page ? '' : options.partials_folder;
+    input_file = utils.find_closest_match(base_folder, input_file);
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
-                                              options.dot_template_settings,
-                                              options.meta_data_sep);
+                                              _.clone(options.dot_template_settings),
+                                              options.meta_data_sep,
+                                              !is_page);
 
     // Build the it object and add meta data if we find some
     var it = _.extend(options.dot_it_object,
