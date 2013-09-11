@@ -10,7 +10,6 @@
 var _ = require('underscore');
 var utils = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
-var md = require('marked');
 
 
 module.exports = function(grunt) {
@@ -30,7 +29,7 @@ module.exports = function(grunt) {
 
     // Prepare the it object for dot
     options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                 compile.bind(null, options));
+                                                 process_src.bind(null, options));
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -41,7 +40,7 @@ module.exports = function(grunt) {
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
-      var compiled_src = compile(options, input_file, true);
+      var compiled_src = process_src(options, input_file, true);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
@@ -51,14 +50,26 @@ module.exports = function(grunt) {
     });
   });
 
-  // Compile the source of an input file
-  function compile (options, input_file, is_page) {
+  // Process a single file
+  function process_src (options, input_file, is_page) {
 
     // First make sure we have the full path
     var base_folder = is_page ? '' : options.partials_folder;
     input_file = utils.find_closest_match(base_folder, input_file);
 
-    console.log("Now compiling " + input_file);
+    // Register the input file type
+    options.is_page = is_page;
+
+    // Run the source through compilers
+    var compiled_src = compile(input_file, options);
+
+    return compiled_src;
+  }
+
+  // Run a file through compilers based on its meta data and return the result
+  function compile (input_file, options) {
+
+    var is_page = _.clone(options.is_page);
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
@@ -70,24 +81,24 @@ module.exports = function(grunt) {
     var it = _.extend(options.dot_it_object,
                       utils.meta_data(input_file, options.meta_data_sep));
 
-    // Compile dot template using it object
+    // Compile file
     var doc = dot_compiler(input_file, it);
-
-    // If we're dealing with markdown,
-    // process doc one more time to get HTML
-    if (/\.md$/.test(input_file)) {
-      doc = md(doc);
-    }
-
-    // In case a parent template is defined in a page's meta data
-    // compile it with the document passed in the it object
-    var parent_template;
-    if (it.template && is_page) {
-      parent_template = utils.find_closest_match(options.templates_folder, it.template);
-      _.extend(it, { document: doc });
-      doc = dot_compiler(parent_template, it);
-    }
+    doc = utils.to_markdown(input_file, doc);
+    doc = is_page
+          ? add_to_template(doc, options.templates_folder, it, dot_compiler)
+          : doc;
 
     return doc;
+  }
+
+  // When parent templates are specified, *they* should be compiled
+  // instead, with the original source passed to the it object
+  function add_to_template (src, templates, it, dot_compiler) {
+    if (it.template) {
+      var parent_template = utils.find_closest_match(templates, it.template);
+      _.extend(it, { document: src });
+      src = dot_compiler(parent_template, it);
+    }
+    return src;
   }
 };
