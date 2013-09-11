@@ -27,7 +27,8 @@ module.exports = function(grunt) {
     });
 
     // Prepare the it object for dot
-    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object);
+    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
+                                                 options.partials_folder);
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
