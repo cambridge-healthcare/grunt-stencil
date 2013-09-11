@@ -27,8 +27,8 @@ module.exports = function(grunt) {
     });
 
     // Prepare the it object for dot
-    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                 options.partials_folder);
+    options.dot_it_object = utils.prepare_it_obj(options);
+    //console.log(options.dot_it_object);
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -51,6 +51,8 @@ module.exports = function(grunt) {
 
   // Compile the source of an input file
   function compile (input_file, options) {
+
+    console.log("\n Now compiling " + input_file.cyan)
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,

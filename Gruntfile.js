@@ -43,7 +43,8 @@ module.exports = function(grunt) {
               stylesheets: [{cwd: '.'},'test/data/styles/*.css']
             }
           },
-          templates_folder: "test/data/templates"
+          templates_folder: 'test/data/templates'
+          //partials_folder: 'test/data/partials'
         },
         files: [
           {
