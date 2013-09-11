@@ -1,0 +1,15 @@
+{
+  "body_class": "meta"
+}
+
+<html>
+  <head>
+  </head>
+  <body class="{{= it.body_class }}">
+
+    <p>This page is self-standing, but does contain meta data in the header that defines the body class.</p>
+
+    {{= it.partials('test/data/partials/dot_md_partial.dot.html') }}
+
+  </body>
+</html>
