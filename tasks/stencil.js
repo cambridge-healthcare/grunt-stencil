@@ -90,13 +90,12 @@ module.exports = function(grunt) {
     var it = _.extend(_.clone(options.dot_it_object),
                       utils.meta_data(input_file, options.meta_data_sep));
 
+    console.log("We are compiling " + input_file + " and it.template shows " + it.template);
 
     // Compile file
     var doc = dot_compiler(input_file, it);
     doc = utils.to_markdown(input_file, doc);
-    doc = is_page
-          ? add_to_template(doc, options.templates_folder, it, dot_compiler)
-          : doc;
+    doc = add_to_template(doc, options.templates_folder, it, dot_compiler)
 
     return doc;
   }
