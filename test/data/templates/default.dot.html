@@ -1,17 +1,24 @@
 <html>
   <head>
-    <title>{{= it.page_title }}</title>
+    <title>{{= it.title }}</title>
 
     {{~it.file_lists.stylesheets :src}}
-    <link rel="stylesheet" type="text/css" href="{{= src }}">
+    <link rel="stylesheet" type="text/css" href="../{{= src }}">
     {{~}}
 
   </head>
   <body class="{{= it.body_class }}">
-    {{= it.page_description}}
-    {{= it.document }}
+    <b>This is a template</b>
 
-    {{= it.include('test/data/partials/footer.md')}}
+    <p>{{= it.message }}</p>
+
+    <div class="page">
+    {{= it.document }}
+    </div>
+    <div class="partial">
+      <div class="header">footer.md</div>
+    {{= it.include('footer')}}
+    </div>
   </body>
 
 </html>

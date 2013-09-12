@@ -1,15 +1,35 @@
 {
-  "body_class": "meta"
+  "body_class": "kittens"
 }
 
 <html>
   <head>
+    <title>ss_with_metadata.dot.html</title>
+    {{~it.file_lists.stylesheets :src}}
+    <link rel="stylesheet" type="text/css" href="../{{= src }}">
+    {{~}}
   </head>
-  <body class="{{= it.body_class }}">
+  <body class="{{= it.body_class }} page selfstanding">
+    <div class="header">ss_with_metadata.dot.html</div>
 
     <p>This page is self-standing, but does contain meta data in the header that defines the body class.</p>
 
-    {{= it.include('test/data/partials/dot_md_partial.md') }}
+    <div class="partial">
+
+      <div class="header">
+        <span class="filename">dot_md_partial.md</span>
+        <pre>
+{
+  dogs: {{= it.include('dot_md_partial', 'dogs') }},
+  kittens: {{= it.include('dot_md_partial', 'kittens') }},
+  cows: {{= it.include('dot_md_partial.md', 'cows') }}
+}
+        </pre>
+      </div>
+
+      {{= it.include('dot_md_partial.md') }}
+
+    </div>
 
   </body>
 </html>

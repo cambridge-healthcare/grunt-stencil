@@ -1,9 +1,15 @@
 {
-  "article_class": "meta"
+  "partial_style": "green"
 }
 
-<p>{{= it.dot_msg }}</p>
+<p>This is a partial that includes another partial.</p>
 
-<p>The following is an include from html_partial</p>
+<div class="partial">
+  <div class="header">html_partial.html</div>
+  {{= it.include('html_partial.html') }}
+</div>
 
-{{= it.include('test/data/partials/html_partial.html') }}
+<div class="partial">
+  <div class="header">footer.md</div>
+  {{= it.include('footer.md') }}
+</div>

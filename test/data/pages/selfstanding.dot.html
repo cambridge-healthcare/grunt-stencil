@@ -1,9 +1,17 @@
 <html>
   <head>
-    <title>{{= it.selfstanding_title }}</title>
+    <title>selfstanding.dot.html</title>
+    {{~it.file_lists.stylesheets :src}}
+    <link rel="stylesheet" type="text/css" href="../{{= src }}">
+    {{~}}
   </head>
-  <body>
-  <p>{{= it.selfstanding_msg }}</p>
-  {{= it.include('test/data/partials/md/md_partial.md') }}
+  <body class="selfstanding page">
+    <div class="header">selfstanding.dot.html</div>
+    <p>This is just a self-standing page!</p>
+
+    <div class="partial">
+      <div class="header">md_partial.md</div>
+      {{= it.include('md/md_partial.md') }}
+    </div>
   </body>
 </html>

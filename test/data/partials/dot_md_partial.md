@@ -1,5 +1,9 @@
-# This partial contains both dot variables as well as markdown
+{
+  "cows": "moo",
+  "kittens": "meow",
+  "dogs": "woof"
+}
 
-{{= it.dot_msg }}
+Another partial written in markdown, this one has animal sounds in the header. Try out some `code`:
 
-As a final step, the file should be compiled from md to HTML.
+    print Hello World
