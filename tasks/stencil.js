@@ -10,7 +10,7 @@
 var _ = require('underscore');
 var utils = require('../lib/utils.js');
 var err = require('../lib/error_handlers.js');
-
+var Stack = require('../lib/stack.js')
 
 module.exports = function(grunt) {
 
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
       var input_file = mapping.src[0];
 
       // Prepare the it object for dot
-      var partials_stack = [];
+      var partials_stack = new Stack;
       options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
                                                    process_inclusion.bind(null, options, false, partials_stack));
 
@@ -58,10 +58,6 @@ module.exports = function(grunt) {
     var base_folder = is_page ? '' : options.partials_folder;
     input_file = utils.find_closest_match(base_folder, input_file);
 
-    console.log("Processing the inclusion of " + input_file + ", stack is: ");
-    partials_stack.push(input_file);
-    console.log(partials_stack);
-
     // Is the inclusion request for a meta data element,
     // or the compiled src itself?
     var response;
@@ -69,7 +65,12 @@ module.exports = function(grunt) {
       response = utils.meta_data(input_file, options.meta_data_sep)[requested_header_field];
     }
     else {
+      // Check if we have already processed this inclusion up the stack
+      // if not, compile
+      err.fail(partials_stack.contains(input_file), err.msgs.circular_inclusion(input_file));
+      partials_stack.add(input_file);
       response = compile(input_file, _.extend(options, {is_page: is_page}));
+      partials_stack.remove(input_file);
     }
 
     return response;
@@ -77,7 +78,7 @@ module.exports = function(grunt) {
 
   // Run a file through compilers based on its meta data and return the result
   function compile (input_file, options) {
-
+    console.log("Processing the compilation of " + input_file);
     var is_page = _.clone(options.is_page);
 
     // Define a dot template compiler based on given options
