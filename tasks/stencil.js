@@ -60,16 +60,27 @@ module.exports = function(grunt) {
     // Register the input file type
     options.is_page = is_page;
 
-    // Run the source through compilers
-    var compiled_src = compile(input_file, options);
+    // Is the inclusion request for a meta data element,
+    // or the compiled src itself?
+    var response;
+    if (meta_data_field) {
+      console.log("The template is asking for the field " + meta_data_field + " in file " + input_file);
+    }
+    else {
+      console.log("\nRequest was for compilation" + (options.is_page ? ", and it's a PAGE!" : ""));
+      response = compile(input_file, options);
+    }
 
-    return compiled_src;
+
+    return response;
   }
 
   // Run a file through compilers based on its meta data and return the result
   function compile (input_file, options) {
 
+
     var is_page = _.clone(options.is_page);
+
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
@@ -78,8 +89,9 @@ module.exports = function(grunt) {
                                               !is_page);
 
     // Build the it object and add meta data if we find some
-    var it = _.extend(options.dot_it_object,
+    var it = _.extend(_.clone(options.dot_it_object),
                       utils.meta_data(input_file, options.meta_data_sep));
+
 
     // Compile file
     var doc = dot_compiler(input_file, it);
