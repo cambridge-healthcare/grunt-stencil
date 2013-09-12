@@ -7,6 +7,6 @@
 
 <p>{{= it.template_msg }}</p>
 
-<article class="{{= it.article_class }}">
+<article class="{{= it.include('test/data/partials/dot_partial', 'article_class') }}">
 {{= it.include('test/data/partials/dot_partial') }}
 </article>

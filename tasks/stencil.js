@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     // Prepare the it object for dot
     options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                 process_inclusion.bind(null, options));
+                                                 process_inclusion.bind(null, options, false));
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
-      var compiled_src = process_inclusion(options, input_file, true);
+      var compiled_src = process_inclusion(options, true, input_file);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
@@ -51,26 +51,21 @@ module.exports = function(grunt) {
   });
 
   // Process a single include statement
-  function process_inclusion (options, input_file, is_page, meta_data_field) {
+  function process_inclusion (options, is_page, input_file, requested_header_field) {
 
     // First make sure we have the full path
     var base_folder = is_page ? '' : options.partials_folder;
     input_file = utils.find_closest_match(base_folder, input_file);
 
-    // Register the input file type
-    options.is_page = is_page;
-
     // Is the inclusion request for a meta data element,
     // or the compiled src itself?
     var response;
-    if (meta_data_field) {
-      console.log("The template is asking for the field " + meta_data_field + " in file " + input_file);
+    if (requested_header_field) {
+      response = utils.meta_data(input_file, options.meta_data_sep)[requested_header_field];
     }
     else {
-      console.log("\nRequest was for compilation" + (options.is_page ? ", and it's a PAGE!" : ""));
-      response = compile(input_file, options);
+      response = compile(input_file, _.extend(options, {is_page: is_page}));
     }
-
 
     return response;
   }
@@ -78,9 +73,7 @@ module.exports = function(grunt) {
   // Run a file through compilers based on its meta data and return the result
   function compile (input_file, options) {
 
-
     var is_page = _.clone(options.is_page);
-
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
