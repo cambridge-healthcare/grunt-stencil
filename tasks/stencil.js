@@ -27,20 +27,21 @@ module.exports = function(grunt) {
       partials_folder: ''
     });
 
-    // Prepare the it object for dot
-    options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                 process_inclusion.bind(null, options, false));
-
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
     this.files.forEach(function(mapping) {
 
       // Check there is a 1:1 src-dest mapping
       err.fail(mapping.src.length > 1, err.msgs.mapping_cardinality);
+      var input_file = mapping.src[0];
+
+      // Prepare the it object for dot
+      var partials_stack = [];
+      options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
+                                                   process_inclusion.bind(null, options, false, partials_stack));
 
       // Compile the source of the input file
-      var input_file = mapping.src[0];
-      var compiled_src = process_inclusion(options, true, input_file);
+      var compiled_src = process_inclusion(options, true, partials_stack, input_file);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
@@ -51,11 +52,15 @@ module.exports = function(grunt) {
   });
 
   // Process a single include statement
-  function process_inclusion (options, is_page, input_file, requested_header_field) {
+  function process_inclusion (options, is_page, partials_stack, input_file, requested_header_field) {
 
     // First make sure we have the full path
     var base_folder = is_page ? '' : options.partials_folder;
     input_file = utils.find_closest_match(base_folder, input_file);
+
+    console.log("Processing the inclusion of " + input_file + ", stack is: ");
+    partials_stack.push(input_file);
+    console.log(partials_stack);
 
     // Is the inclusion request for a meta data element,
     // or the compiled src itself?
