@@ -78,15 +78,13 @@ module.exports = function(grunt) {
 
   // Run a file through compilers based on its meta data and return the result
   function compile (input_file, options) {
-    var is_page = _.clone(options.is_page);
 
     // Define a dot template compiler based on given options
     var dot_compiler = utils.compile_dot.bind(null,
                                               _.clone(options.dot_template_settings),
-                                              options.meta_data_sep,
-                                              !is_page);
+                                              options.meta_data_sep);
 
-    // Build the it object and add meta data if we find some
+    // Build the it object, adding meta data if we find some
     var it = _.extend(_.clone(options.dot_it_object),
                       utils.meta_data(input_file, options.meta_data_sep));
 
