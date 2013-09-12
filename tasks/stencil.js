@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     // Prepare the it object for dot
     options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                 process_src.bind(null, options));
+                                                 process_inclusion.bind(null, options));
 
     // Iterate over all specified file groups.
     // mapping.src already contains only existing files
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
       // Compile the source of the input file
       var input_file = mapping.src[0];
-      var compiled_src = process_src(options, input_file, true);
+      var compiled_src = process_inclusion(options, input_file, true);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
@@ -50,8 +50,8 @@ module.exports = function(grunt) {
     });
   });
 
-  // Process a single file
-  function process_src (options, input_file, is_page) {
+  // Process a single include statement
+  function process_inclusion (options, input_file, is_page, meta_data_field) {
 
     // First make sure we have the full path
     var base_folder = is_page ? '' : options.partials_folder;
