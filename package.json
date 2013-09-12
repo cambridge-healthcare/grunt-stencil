@@ -34,7 +34,8 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt": "~0.4.1",
-    "marked": "~0.2.9"
+    "marked": "~0.2.9",
+    "jasmine-node": "~1.11.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
