@@ -30,29 +30,52 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     stencil: {
-      task: {
+      main: {
         options: {
           dot_template_settings: {strip: false},
           dot_it_object: {
-            selfstanding_title: "Stencil-generated self-standing page",
-            selfstanding_msg:   "I am a page that is not wrapped in a template.",
-            template_msg:       "I am a page that has meta data which says I need to be wrapped in a template.",
-            dot_msg:            "The contents of this file should be parsed by dot (with stripping enabled regardless of use oprions).",
+            partial_border: '2px dashed #dfdfdf',
+            page_border: '2px solid #red',
             file_lists: {
-              stylesheets: [{cwd: '.'},'test/data/styles/*.css']
+              stylesheets: [{cwd: '.'},'test/data/styles/*.css'],
+              partials: [{}, 'test/data/partials/*']
             }
           },
-          templates_folder: 'test/data/templates'
-          //partials_folder: 'test/data/partials'
+          templates_folder: 'test/data/templates',
+          partials_folder: 'test/data/partials'
         },
         files: [
           {
             expand: true,
-            cwd: 'test/data/',
-            src: ['pages/*'],
+            cwd: 'test/data/pages',
+            src: ['*.dot.html', '*.md'],
             dest: 'tmp/',
             ext: '.html',
             flatten: true
+          }
+        ]
+      },
+
+      inclusion_error: {
+        options: {
+          dot_it_object: {
+            partial_border: '2px dashed #dfdfdf',
+            page_border: '2px solid #red',
+            file_lists: {
+              stylesheets: [{cwd: '.'},'test/data/styles/*.css'],
+              partials: [{}, 'test/data/partials/*']
+            }
+          },
+          templates_folder: 'test/data/templates',
+          partials_folder: 'test/data/partials'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'test/data/pages',
+            src: ['infinite.html'],
+            dest: 'tmp/',
+            ext: '.html'
           }
         ]
       }
