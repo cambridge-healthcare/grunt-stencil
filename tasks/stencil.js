@@ -8,7 +8,10 @@
 
 'use strict';
 
-var page = require('../lib/page');
+var separator = '\n\n';
+
+var source = require('../lib/source')(separator);
+var page = require('../lib/page')(source);
 
 module.exports = function(grunt) {
   grunt.registerMultiTask('stencil', 'HTML compilation with doT, Markdown and includes', stencil);
