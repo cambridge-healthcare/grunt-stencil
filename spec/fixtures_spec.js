@@ -13,9 +13,9 @@ describe("stencil task", function () {
         var expected_dir = 'spec/expected';
         fs.readdirSync(expected_dir).forEach(function (name) {
           expect(
-            fs.readFileSync('tmp/' + name, 'utf8')
+            strip(fs.readFileSync('tmp/' + name, 'utf8'))
           ).toEqual(
-            fs.readFileSync('spec/expected/' + name, 'utf8')
+            strip(fs.readFileSync('spec/expected/' + name, 'utf8'))
           );
         });
       }).not.toThrow();
@@ -23,3 +23,7 @@ describe("stencil task", function () {
     });
   });
 });
+
+function strip (str) {
+  str.replace(/(^\w+)|(\w+$)/g, '');
+}
