@@ -1,4 +1,4 @@
-xdescribe("The source module", function () {
+describe("source", function () {
   var separator = '\n\n';
   var meta_data = {
     field: "value"
@@ -21,7 +21,7 @@ xdescribe("The source module", function () {
       var src = content;
 
       it("returns complete contents of the source", function() {
-        expect(source.content(src).toEqual(src));
+        expect(source.content(src)).toEqual(src);
       });
     });
   });
@@ -31,17 +31,21 @@ xdescribe("The source module", function () {
       expect(source.header(src)).toEqual(meta_data);
     });
 
-    it("returns an empty object if the source did not contain meta data", function() {
-      src = content;
-      expect(source.header(src)).toEqual({});
+    describe("when the source did not contain meta data", function () {
+      it("returns an empty object", function() {
+        var src = content;
+        expect(source.header(src)).toEqual({});
+      });
     });
-
-    it("returns exactly what was given if the source had no content", function() {
-
+    describe("when the source begins with doT syntax", function () {
+      it("returns an empty object", function () {
+        var src = '{{';
+        expect(source.header(src)).toEqual({});
+      })
     });
   });
 
-  describe("when requesting for the source to be parsed", function () {
+  describe(".parsed", function () {
     describe("when accessing any field", function () {
       it("shouldn't throw an error", function () {
         expect(function () {
