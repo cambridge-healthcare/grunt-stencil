@@ -16,7 +16,8 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        'lib/*.js'
+        'lib/*.js',
+        'test/*.js'
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -25,7 +26,7 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tmp: ['tmp'],
     },
 
     // Configuration to be run (and then tested).

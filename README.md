@@ -82,6 +82,13 @@ grunt.initConfig({
 })
 ```
 
+## Tests
+
+The tests for this plugin are written in (Jasmine)[http://pivotal.github.io/jasmine/], and you need (jasmine-node)[https://github.com/mhevery/jasmine-node] to run them.
+
+- `npm install jasmine-node -g`
+- `jasmine-node test/` (from the plugin directory)
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
