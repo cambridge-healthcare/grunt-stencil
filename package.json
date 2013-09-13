@@ -25,19 +25,13 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/.bin/jasmine-node spec"
   },
   "devDependencies": {
     "dot": "1",
     "underscore": "1",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-clean": "~0.4.0",
     "grunt": "~0.4.1",
-    "marked": "~0.2.9",
     "jasmine-node": "latest"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.1"
   },
   "keywords": [
     "gruntplugin"
