@@ -8,10 +8,24 @@ function random_word () {
 }
 
 describe("page", function () {
-  var page = require('../lib/page');
+  var separator = random_word();
+
+  var source = require('../lib/source')(separator);
+  var page = require('../lib/page')(source);
 
   it("compiles dot template", function () {
     var text = random_word();
     expect(page('{{= "' + text + '" }}')).toEqual(text);
+  });
+
+  it("passes header to template", function () {
+    var title = random_word();
+    var header = JSON.stringify({
+      title: title
+    });
+
+    var content = '{{= it.title }}';
+
+    expect(page(header + separator + content)).toEqual(title);
   });
 });
