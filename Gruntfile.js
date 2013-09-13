@@ -6,26 +6,25 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+"use strict";
 
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     jshint: {
       all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        'lib/*.js'
+        "Gruntfile.js",
+        "tasks/*.js",
+        "lib/*.js"
       ],
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: ".jshintrc",
       },
     },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tmp: ['tmp'],
+      tmp: ["tmp"],
     },
 
     // Configuration to be run (and then tested).
@@ -34,23 +33,23 @@ module.exports = function(grunt) {
         options: {
           dot_template_settings: {strip: false},
           dot_it_object: {
-            partial_border: '2px dashed #dfdfdf',
-            page_border: '2px solid #red',
+            partial_border: "2px dashed #dfdfdf",
+            page_border: "2px solid #red",
             file_lists: {
-              stylesheets: [{cwd: '.'},'test/data/styles/*.css'],
-              partials: [{}, 'test/data/partials/*']
+              stylesheets: [{cwd: "."},"test/data/styles/*.css"],
+              partials: [{}, "test/data/partials/*"]
             }
           },
-          templates_folder: 'test/data/templates',
-          partials_folder: 'test/data/partials'
+          templates_folder: "test/data/templates",
+          partials_folder: "test/data/partials"
         },
         files: [
           {
             expand: true,
-            cwd: 'test/data/pages',
-            src: ['*.dot.html', '*.md'],
-            dest: 'tmp/',
-            ext: '.html',
+            cwd: "test/data/pages",
+            src: ["*.dot.html", "*.md"],
+            dest: "tmp/",
+            ext: ".html",
             flatten: true
           }
         ]
@@ -59,23 +58,23 @@ module.exports = function(grunt) {
       inclusion_error: {
         options: {
           dot_it_object: {
-            partial_border: '2px dashed #dfdfdf',
-            page_border: '2px solid #red',
+            partial_border: "2px dashed #dfdfdf",
+            page_border: "2px solid #red",
             file_lists: {
-              stylesheets: [{cwd: '.'},'test/data/styles/*.css'],
-              partials: [{}, 'test/data/partials/*']
+              stylesheets: [{cwd: "."},"test/data/styles/*.css"],
+              partials: [{}, "test/data/partials/*"]
             }
           },
-          templates_folder: 'test/data/templates',
-          partials_folder: 'test/data/partials'
+          templates_folder: "test/data/templates",
+          partials_folder: "test/data/partials"
         },
         files: [
           {
             expand: true,
-            cwd: 'test/data/pages',
-            src: ['infinite.html'],
-            dest: 'tmp/',
-            ext: '.html'
+            cwd: "test/data/pages",
+            src: ["infinite.html"],
+            dest: "tmp/",
+            ext: ".html"
           }
         ]
       }
@@ -83,14 +82,13 @@ module.exports = function(grunt) {
 
   });
 
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
+  // Actually load this plugin"s task(s).
+  grunt.loadTasks("tasks");
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-clean");
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['clean', 'stencil', 'jshint']);
-
+  grunt.registerTask("default", ["clean", "stencil", "jshint"]);
 };

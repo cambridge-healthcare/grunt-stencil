@@ -26,7 +26,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/.bin/jasmine-node spec"
   },
   "dependencies": {
     "dot": "1",
@@ -38,9 +38,6 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt": "~0.4.1",
     "jasmine-node": "latest"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.1"
   },
   "keywords": [
     "gruntplugin", "templating", "markdown", "dot", "HTML generation", "generating HTML", "templates"
