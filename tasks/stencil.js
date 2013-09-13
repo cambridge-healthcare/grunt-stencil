@@ -14,5 +14,10 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('stencil', 'HTML compilation with doT, Markdown and includes', stencil);
 
   function stencil () {
+    this.files.forEach(function (mapping) {
+      var src = grunt.file.read(mapping.src);
+      var result = page(src);
+      grunt.file.write(mapping.dest, result);
+    });
   }
 };
