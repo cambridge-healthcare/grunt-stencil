@@ -85,10 +85,13 @@ module.exports = function (grunt) {
   // Actually load this plugin"s task(s).
   grunt.loadTasks("tasks");
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-clean");
-
-  // By default, lint and run all tests.
-  grunt.registerTask("default", ["clean", "stencil", "jshint"]);
+  grunt.initConfig({
+    stencil: {
+      test_dot_only: {
+        files: {
+          'tmp/dot_only.html': 'spec/fixtures/dot_only.dot.html'
+        }
+      }
+    }
+  });
 };
