@@ -87,10 +87,14 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     stencil: {
-      test_dot_only: {
-        files: {
-          'tmp/dot_only.html': 'spec/fixtures/dot_only.dot.html'
-        }
+      fixtures: {
+        files: [{
+          expand: true,
+          cwd: 'spec/fixtures',
+          src: '*.dot.html',
+          dest: 'tmp',
+          ext: '.html'
+        }]
       }
     }
   });
