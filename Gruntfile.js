@@ -88,6 +88,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     stencil: {
       fixtures: {
+        options: {
+          includes: 'spec/includes'
+        },
         files: [{
           expand: true,
           cwd: 'spec/fixtures',
