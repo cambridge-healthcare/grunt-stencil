@@ -99,7 +99,7 @@ The following example shows how to automatically add tags for stylesheets in the
 
 ### Defining and using meta data headers
 
-All pages and partials can have meta data headers to pass arbitrary information to the template. At the moment, the headers need to be written in JSON, but the separator that specifies where the header ends and content begins can be customized in the options (by default, the file will be separated from the first occurrence of a blank line, the separator being `\n\n`).
+All pages and partials can have meta data headers to pass arbitrary information to the template. At the moment, the headers need to be written in JSON, but the separator that specifies where the header ends and content begins can be customized in the options (by default, the file will be separated from the first occurrence of a blank line, the separator being `\n\n`). Meta data fields are appended to doT's it object, so if a page defines a `body_class`, it will be accessible from `it.body_class` in the template.
 
 Meta data fields can also be accessed by files that don't directly include the partial where the value is defined. For example, to include the field `contact_styles` from the partial `contact.dot.html` in  `footer.md`, one would use `{{= it.include('contact', 'contact_styles') }}`, and the value from that field will be included in the footer.
 
@@ -185,36 +185,119 @@ grunt.initConfig({
 })
 ```
 
+[Grunt's rules for defining target and destination files](https://github.com/gruntjs/grunt/wiki/Configuring-tasks#files) apply, but care needs to be taken to make sure each input page maps to a single output file.
+
 ### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, the default options are used.
 
 ```js
 grunt.initConfig({
   stencil: {
+    main: // task target name
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dist/index.html': ['pages/index.dot.html'],
     },
   },
 })
+```
+
+__Input:__ `pages/index.dot.html`
+
+```html
+{
+  "wrapper_class": "introduction",
+  "template": "templates/main"
+}
+
+
+<div class="title_bar"><span>Our company</span></div>
+
+<section>
+{{= it.include('partials/company_introduction') }}
+</section>
+```
+
+`partials/company_introduction.md`:
+
+```html
+
+## Founding
+
+The company was founded in 1906.
+```
+
+`templates/main.dot.html`:
+
+```html
+<html>
+  <body>
+    <div class="{{= it.wrapper_class }}">
+      {{= it.document }}
+    </div>
+  </body>
+</html>
+```
+
+__Output:__ `dist/index.html`
+
+```html
+<html>
+  <body>
+    <div class="introduction">
+      <div class="title_bar"><span>Our company</span></div>
+      <section>
+        <h2>Founding</h2>
+        <p>The company was founded in 1906.</p>
+      </section>
+    </div>
+  </body>
+</html>
 ```
 
 ### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+
+In this example, doT's it object is used to specify the location of script files and the main title of all pages; and the location of partials and templates is given. All pages in `pages/` will be compiled to `.html` files in `tmp`.
 
 ```js
 grunt.initConfig({
   stencil: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
+    main: {
+      options: {
+        dot_it_object: {
+          title: "Stencil",
+          file_lists: {
+            scripts: [{}, 'js/*.js']
+          }
+        }
+        partials_folder: 'content',
+        templates_folder: 'templates'
+      },
+      files: [
+        {
+          expand: true,
+          cwd: 'src/pages/',
+          src: '**/*.dot.html',
+          dest: 'tmp',
+          ext: '.html',
+          flatten: true
+        }
+      ]
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+  }
 })
 ```
+
+Running `grunt stencil` with these options will allow
+
+- all `.dot.html` files recursively found in `src/pages/` to be compiled to files of the same name in the `tmp` folder, but with an `.html` extension;
+- `{{= it.file_lists_scripts }}` to hold an array of all `.js` files in the `js` folder, that can be referenced from any partial, page or template;
+- partials and templates to be referenced without specifying the full path;
+- `{{= it.title }}` to be specified in any partial, template or page to get "Stencil".
+
+---
+
+There are elaborate example input files and configurations available in this repository. All input files used for example compilation are in `test/data`. To visually see the inclusion relationships between different components, run `grunt stencil` in the root of this repository (or in `node_modules/grunt-stencil` if you've installed via npm), and examine the output files in `tmp` or open them in the browser.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
