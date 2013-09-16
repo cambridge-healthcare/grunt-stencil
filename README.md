@@ -20,6 +20,37 @@ grunt.loadNpmTasks('grunt-stencil');
 ## The "stencil" task
 
 ### Overview
+
+% Short paragraph to describe the stencil task (mention doT, markdown)
+
+### Template components
+
+#### Pages
+
+#### Partials
+
+#### Templates
+
+### Defining meta data headers
+
+### Using doT
+
+## Options
+
+### options.separator
+Type: `String`
+Default value: `',  '`
+
+A string value that is used to do something with whatever.
+
+### options.punctuation
+Type: `String`
+Default value: `'.'`
+
+A string value that is used to do something else with whatever else.
+
+## Usage Examples
+
 In your project's Gruntfile, add a section named `stencil` to the data object passed into `grunt.initConfig()`.
 
 ```js
@@ -35,23 +66,7 @@ grunt.initConfig({
 })
 ```
 
-### Options
-
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
+### Default Options
 In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
 
 ```js
@@ -65,7 +80,7 @@ grunt.initConfig({
 })
 ```
 
-#### Custom Options
+### Custom Options
 In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
@@ -82,15 +97,9 @@ grunt.initConfig({
 })
 ```
 
-## Tests
-
-The tests for this plugin are written in (Jasmine)[http://pivotal.github.io/jasmine/], and you need (jasmine-node)[https://github.com/mhevery/jasmine-node] to run them.
-
-- `npm install jasmine-node -g`
-- `jasmine-node test/` (from the plugin directory)
-
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+
+- __version 0.0.1__ (16th September, 2013)
