@@ -144,7 +144,7 @@ Default value: `{}`
 An object passed to all input files that will be accessible using `{{= it.key }}` (see [doT.js](http://olado.github.io/doT/index.html)).
 
 ### options.dot_it_object.file_lists  
-Type: 'Object'  
+Type: `Object'`  
 Default value: `{}`
 
 An object of file matching patterns passed to all input files that is intended to be used for automated filepath generation. All keys should map to Arrays with two values that are used as arguments for [grunt.file.expand](https://github.com/gruntjs/grunt/wiki/grunt.file#gruntfileexpand) --- the first is an object with optional settings for `expand`, and the second is the actual pattern. For example, specifying
