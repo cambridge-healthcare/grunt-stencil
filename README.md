@@ -131,20 +131,20 @@ Finally, while specifying template and partial file extensions is optional (ther
 
 Each of the following is optional.
 
-### options.dot_template_settings
-Type: `Object`
+### options.dot_template_settings  
+Type: `Object`  
 Default value: `{}`
 
 An object that specifies the template settings that are passed to the doT compiler as `dot.templateSettings` (see [doT.js](http://olado.github.io/doT/index.html)).
 
-### options.dot_it_object
-Type: `Object`
+### options.dot_it_object  
+Type: `Object`  
 Default value: `{}`
 
 An object passed to all input files that will be accessible using `{{= it.key }}` (see [doT.js](http://olado.github.io/doT/index.html)).
 
-### options.dot_it_object.file_lists
-Type: 'Object'
+### options.dot_it_object.file_lists  
+Type: `Object'`  
 Default value: `{}`
 
 An object of file matching patterns passed to all input files that is intended to be used for automated filepath generation. All keys should map to Arrays with two values that are used as arguments for [grunt.file.expand](https://github.com/gruntjs/grunt/wiki/grunt.file#gruntfileexpand) --- the first is an object with optional settings for `expand`, and the second is the actual pattern. For example, specifying
@@ -156,20 +156,20 @@ file_lists: {
 ```
 will result in `it.file_lists.stylesheets` being evaluated to `['main.css', 'links.css']` (assuming these two files were present in the `styles` folder). See above for an example of how to define all style tags with a single doT expression.
 
-### options.templates_folder
-Type: `String`
+### options.templates_folder  
+Type: `String`  
 Default value: `''`
 
 A String value specifying the location of all templates. When specified, this will allow to call templates in pages' meta data without the full path to it (the specified `templates_folder` will be prepended).
 
-### options.partials_folder
-Type: `String`,
+### options.partials_folder  
+Type: `String`  
 Default value: `''`
 
 A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
 
-### options.meta_data_sep
-Type: `String`
+### options.meta_data_sep  
+Type: `String`  
 Default value: `\n\n`
 
 A String value specifying the characters to search for when separating meta data from the content of a file. By default, the JSON header of a file is considered to end after the first blank line in the file.
