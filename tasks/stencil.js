@@ -31,17 +31,19 @@ module.exports = function(grunt) {
     // mapping.src already contains only existing files
     this.files.forEach(function(mapping) {
 
+      var opts = _.clone(options);
+
       // Check there is a 1:1 src-dest mapping
       err.fail(mapping.src.length > 1, err.msgs.mapping_cardinality);
       var input_file = mapping.src[0];
 
       // Prepare the it object for dot
       var partials_stack = new Stack;
-      options.dot_it_object = utils.prepare_it_obj(options.dot_it_object,
-                                                   process_inclusion.bind(null, options, false, partials_stack));
+      opts.dot_it_object = utils.prepare_it_obj(_.clone(opts.dot_it_object),
+                                                process_inclusion.bind(null, opts, false, partials_stack));
 
       // Compile the source of the input file
-      var compiled_src = process_inclusion(options, true, partials_stack, input_file);
+      var compiled_src = process_inclusion(opts, true, partials_stack, input_file);
 
       // Write the destination file.
       grunt.file.write(mapping.dest, compiled_src);
