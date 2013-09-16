@@ -168,6 +168,12 @@ Default value: `''`
 
 A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
 
+### options.meta_data_sep
+Type: `String`
+Default value: `\n\n`
+
+A String value specifying the characters to search for when separating meta data from the content of a file. By default, the JSON header of a file is considered to end after the first blank line in the file.
+
 ## Usage Examples
 
 In your project's Gruntfile, add a section named `stencil` to the data object passed into `grunt.initConfig()`.
