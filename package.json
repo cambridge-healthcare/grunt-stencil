@@ -1,12 +1,13 @@
 {
   "name": "grunt-stencil",
   "description": "A Grunt templating plugin to generate static HTML files from given pages, templates and partials written in either pure HTML, doT.js, or markdown.",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/cambridge-healthcare/grunt-stencil",
   "author": {
     "name": "Cambridge Healthcare",
     "email": ""
   },
+  "contributors": ["Elise Hein", "Szymon Witamborski"],
   "repository": {
     "type": "git",
     "url": "git://github.com/cambridge-healthcare/grunt-stencil.git"
@@ -40,6 +41,6 @@
     "grunt": "~0.4.1"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin", "templating", "markdown", "dot", "HTML generation", "generating HTML", "templates"
   ]
 }
