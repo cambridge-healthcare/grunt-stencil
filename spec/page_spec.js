@@ -16,7 +16,10 @@ describe("page", function () {
 
   var partials = {
     asdf: randoms.word(),
-    qwer: '{"a":1}'
+    qwer: '{"a":1}',
+    dotted: '{{= "asdf" }}',
+    dotted_w_header: '{"title":"asdf"}' + separator + '{{= it.title }}',
+    dotted_w_params: '{{= it.title }}'
   };
 
   function read_partial_source (path) {
@@ -48,5 +51,20 @@ describe("page", function () {
   it("has partial's header fields available", function () {
     var content = '{{= it.include("qwer").a }}';
     expect(page(content)).toEqual('1');
+  });
+
+  it("compiles partials with doT", function () {
+    var content = '{{= it.include("dotted") }}';
+    expect(page(content)).toEqual('asdf');
+  });
+
+  it("partial's template access it's header", function () {
+    var content = '{{= it.include("dotted_w_header") }}';
+    expect(page(content)).toEqual('asdf');
+  });
+
+  it("partial can access extra properties passed in", function () {
+    var content = '{{= it.include("dotted_w_params", {title:"asdf"}) }}';
+    expect(page(content)).toEqual('asdf');
   });
 });
