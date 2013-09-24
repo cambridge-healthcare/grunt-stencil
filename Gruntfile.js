@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'spec/fixtures',
-          src: '*.dot.html',
+          src: '*.html',
           dest: 'tmp',
           ext: '.html'
         }]
