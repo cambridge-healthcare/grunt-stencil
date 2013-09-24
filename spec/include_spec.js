@@ -9,7 +9,7 @@ describe("include", function () {
 
   var include_setup = require('../lib/include');
 
-  it("returns object representing partial's content", function () {
+  it("returns object that stores the content of a partial (when called without keys)", function () {
     var partials = { asdf: { a: 1 } };
 
     var include = include_setup({
