@@ -89,7 +89,7 @@ module.exports = function (grunt) {
     stencil: {
       fixtures: {
         options: {
-          includes: 'spec/includes'
+          partials: 'spec/includes'
         },
         files: [{
           expand: true,
