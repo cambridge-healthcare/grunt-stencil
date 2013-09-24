@@ -5,9 +5,7 @@ describe("page", function () {
 
   var source = require('../lib/source')(separator);
 
-  var include = require('../lib/include')({
-    read: function (name) { return partials[name] }
-  });
+  var include = function (process, name) { return process(partials[name]) };
 
   var page = require('../lib/page')({
     source: source,
