@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       partials: '.'
     });
 
-    var include = require('../lib/include')({
+    var process_file = require('../lib/process_file')({
       read: function (name) {
         var find_path = options.partials + '/' + name + '.*';
         return grunt.file.read(grunt.file.expand(find_path));
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     var page = require('../lib/page')({
       source: source,
-      include: include
+      process_file: process_file
     });
 
     this.files.forEach(function (mapping) {
