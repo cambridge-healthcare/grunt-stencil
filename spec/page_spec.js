@@ -5,11 +5,11 @@ describe("page", function () {
 
   var source = require('../lib/source')(separator);
 
-  var include = function (process, name) { return process(partials[name]) };
+  var process_file = function (process, name) { return process(partials[name]) };
 
   var page = require('../lib/page')({
     source: source,
-    include: include
+    process_file: process_file
   });
 
   var partials = {
