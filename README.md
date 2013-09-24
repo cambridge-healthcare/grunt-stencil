@@ -7,7 +7,9 @@ Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates s
 - Built in support for markdown
 - Meta data headers in the beginning of each file to specify variables that should be used in the file (that are accessible from partials included in the file, or templates the file is injected into).
 
-> See the [Wiki pages](https://github.com/cambridge-healthcare/grunt-stencil/wiki) for full documentation.
+## Documentation
+
+See the __[Wiki pages](https://github.com/cambridge-healthcare/grunt-stencil/wiki)__ for full documentation.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -28,7 +30,7 @@ grunt.loadNpmTasks('grunt-stencil');
 
 ### Options
 
-> A more detailed explanation of all options can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Options).
+*A more detailed explanation of all options can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Options).*
 
 Each of the following is optional.
 
@@ -77,7 +79,7 @@ A String value specifying the characters to search for when separating meta data
 
 ### Usage Examples
 
-> An elaborate list of examples can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Examples).
+*An elaborate list of examples can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Examples).*
 
 In your project's Gruntfile, add a section named `stencil` to the data object passed into `grunt.initConfig()`.
 
