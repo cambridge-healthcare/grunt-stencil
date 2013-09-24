@@ -1,13 +1,15 @@
 var randoms = require('./randoms');
 
 describe("include", function () {
-  function from_cache (collection) { return function (name) {
-    return collection[name];
-  }}
+  function from_cache (collection) {
+    return function (name) {
+      return collection[name];
+    }
+  }
 
   var include_setup = require('../lib/include');
 
-  it("returns object representing partial's content and header fields", function () {
+  it("returns object representing partial's content", function () {
     var partials = { asdf: { a: 1 } };
 
     var include = include_setup({
