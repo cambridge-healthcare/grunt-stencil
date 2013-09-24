@@ -14,16 +14,16 @@ var source = require('../lib/source')(separator);
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('stencil', 'HTML compilation with doT, Markdown and includes', stencil);
+  grunt.registerMultiTask('stencil', 'HTML compilation from separate components with doT and Markdown', stencil);
 
   function stencil () {
     var options = this.options({
-      includes: '.'
+      partials: '.'
     });
 
     var include = require('../lib/include')({
       read: function (name) {
-        var find_path = options.includes + '/' + name + '.*';
+        var find_path = options.partials + '/' + name + '.*';
         return grunt.file.read(grunt.file.expand(find_path));
       }
     });
