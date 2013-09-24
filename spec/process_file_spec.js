@@ -1,23 +1,23 @@
 var randoms = require('./randoms');
 
-describe("include", function () {
+describe("process_file", function () {
   function from_cache (collection) {
     return function (name) {
       return collection[name];
     }
   }
 
-  var include_setup = require('../lib/include');
+  var process_file_setup = require('../lib/process_file');
 
-  it("returns object that stores the content of a partial (when called without keys)", function () {
+  it("returns object representing the content of a partial", function () {
     var partials = { asdf: { a: 1 } };
 
-    var include = include_setup({
+    var process_file = process_file_setup({
       read: from_cache(partials),
       process: function (x) { return x; }
     });
 
-    expect(include('asdf')).toEqual(partials.asdf);
+    expect(process_file('asdf')).toEqual(partials.asdf);
   });
 
   it("detects circular dependencies", function () {
@@ -26,27 +26,27 @@ describe("include", function () {
       other: 'first'
     };
 
-    var include = include_setup({
+    var process_file = process_file_setup({
       read: from_cache(partials),
-      process: function (name) { return include(name); }
+      process: function (name) { return process_file(name); }
     });
 
     expect(function () {
-      include('first');
+      process_file('first');
     }).toThrow(new Error('Circular dependency detected.'));
   });
 
-  it("allows to include the same file multiple times", function () {
+  it("allows to process the same file multiple times, if they do not depend on each other", function () {
     var partials = {
       asdf: randoms.word()
     };
 
-    var include = include_setup({
+    var process_file = process_file_setup({
       read: from_cache(partials),
       process: function (x) { return x; }
     });
 
-    expect(include('asdf') + include('asdf'))
+    expect(process_file('asdf') + process_file('asdf'))
       .toEqual(partials.asdf + partials.asdf);
   });
 });
