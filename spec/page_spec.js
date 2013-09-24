@@ -19,7 +19,8 @@ describe("page", function () {
     qwer: '{"a":1}',
     dotted: '{{= "asdf" }}',
     dotted_w_header: '{"title":"asdf"}' + separator + '{{= it.title }}',
-    dotted_w_params: '{{= it.title }}'
+    dotted_w_params: '{{= it.title }}',
+    nested_include: '{{= it.include("asdf") }}'
   };
 
   function read_partial_source (path) {
@@ -41,19 +42,19 @@ describe("page", function () {
     expect(page(header + separator + content)).toEqual(title);
   });
 
-  describe("when it has 'include' statements", function() {
+  describe("when it has an 'include' statement", function() {
 
-    it("includes partials", function () {
+    it("includes a partial", function () {
       var content = '{{= it.include("asdf") }}';
       expect(page(content)).toEqual(partials.asdf);
     });
 
-    it("has acces to meta data from included partials", function () {
+    it("has acces to meta data from the included partial", function () {
       var content = '{{= it.include("qwer").a }}';
       expect(page(content)).toEqual('1');
     });
 
-    it("compiles partials with doT", function () {
+    it("compiles the partial with doT", function () {
       var content = '{{= it.include("dotted") }}';
       expect(page(content)).toEqual('asdf');
     });
@@ -63,5 +64,9 @@ describe("page", function () {
       expect(page(content)).toEqual('asdf');
     });
 
+    it("can process other include statements inside this one", function() {
+      var content = '{{= it.include("nested_include") }} Hello';
+      expect(page(content)).toEqual(partials.asdf + ' Hello');
+    });
   });
 });
