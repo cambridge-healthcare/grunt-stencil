@@ -7,6 +7,8 @@ Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates s
 - Built in support for markdown
 - Meta data headers in the beginning of each file to specify variables that should be used in the file (that are accessible from partials included in the file, or templates the file is injected into).
 
+See the [Wiki pages](git@github.com:cambridge-healthcare/grunt-stencil.wiki.git) for full documentation.
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
