@@ -152,5 +152,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Release History
 
 - __version 0.0.3__ (19th September, 2013) - fix dependencies in `package.json`
-- __version 0.0.2
+- __version 0.0.2__
 - __version 0.0.1__ (16th September, 2013)
