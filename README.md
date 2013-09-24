@@ -7,7 +7,7 @@ Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates s
 - Built in support for markdown
 - Meta data headers in the beginning of each file to specify variables that should be used in the file (that are accessible from partials included in the file, or templates the file is injected into).
 
-See the [Wiki pages](https://github.com/cambridge-healthcare/grunt-stencil/wiki) for full documentation.
+> See the [Wiki pages](https://github.com/cambridge-healthcare/grunt-stencil/wiki) for full documentation.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -26,27 +26,25 @@ grunt.loadNpmTasks('grunt-stencil');
 
 ## The "stencil" task
 
-### Overview
+### Options
 
-Stencil is a feature-rich Grunt plugin for compiling static HTML templates from given components, which supports [the doT.js templating language](http://olado.github.io/doT/index.html) as well as markdown. It is useful for modularizing your HTML source files, avoiding duplicate code, and passing any arbitrary variables or data to your templates.
-
-## Options
+> A more detailed explanation of all options can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Options).
 
 Each of the following is optional.
 
-### options.dot_template_settings
+#### options.dot_template_settings
 Type: `Object`
 Default value: `{}`
 
 An object that specifies the template settings that are passed to the doT compiler as `dot.templateSettings` (see [doT.js](http://olado.github.io/doT/index.html)).
 
-### options.dot_it_object
+#### options.dot_it_object
 Type: `Object`
 Default value: `{}`
 
 An object passed to all input files that will be accessible using `{{= it.key }}` (see [doT.js](http://olado.github.io/doT/index.html)).
 
-### options.dot_it_object.file_lists
+#### options.dot_it_object.file_lists
 Type: `Object'`
 Default value: `{}`
 
@@ -59,25 +57,27 @@ file_lists: {
 ```
 will result in `it.file_lists.stylesheets` being evaluated to `['main.css', 'links.css']` (assuming these two files were present in the `styles` folder). See above for an example of how to define all style tags with a single doT expression.
 
-### options.templates_folder
+#### options.templates_folder
 Type: `String`
 Default value: `''`
 
 A String value specifying the location of all templates. When specified, this will allow to call templates in pages' meta data without the full path to it (the specified `templates_folder` will be prepended).
 
-### options.partials_folder
+#### options.partials_folder
 Type: `String`
 Default value: `''`
 
 A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
 
-### options.meta_data_sep
+#### options.meta_data_sep
 Type: `String`
 Default value: `\n\n`
 
 A String value specifying the characters to search for when separating meta data from the content of a file. By default, the JSON header of a file is considered to end after the first blank line in the file.
 
-## Usage Examples
+### Usage Examples
+
+> An elaborate list of examples can be found in [the Wiki](https://github.com/cambridge-healthcare/grunt-stencil/wiki/Examples).
 
 In your project's Gruntfile, add a section named `stencil` to the data object passed into `grunt.initConfig()`.
 
@@ -96,7 +96,7 @@ grunt.initConfig({
 
 [Grunt's rules for defining target and destination files](https://github.com/gruntjs/grunt/wiki/Configuring-tasks#files) apply, but care needs to be taken to make sure each input page maps to a single output file.
 
-### Default Options
+#### Default Options
 In this example, the default options are used.
 
 ```js
@@ -111,60 +111,7 @@ grunt.initConfig({
 })
 ```
 
-__Input:__ `pages/index.dot.html`
-
-```html
-{
-  "wrapper_class": "introduction",
-  "template": "templates/main"
-}
-
-
-<div class="title_bar"><span>Our company</span></div>
-
-<section>
-{{= it.include('partials/company_introduction') }}
-</section>
-```
-
-`partials/company_introduction.md`:
-
-```html
-
-## Founding
-
-The company was founded in 1906.
-```
-
-`templates/main.dot.html`:
-
-```html
-<html>
-  <body>
-    <div class="{{= it.wrapper_class }}">
-      {{= it.document }}
-    </div>
-  </body>
-</html>
-```
-
-__Output:__ `dist/index.html`
-
-```html
-<html>
-  <body>
-    <div class="introduction">
-      <div class="title_bar"><span>Our company</span></div>
-      <section>
-        <h2>Founding</h2>
-        <p>The company was founded in 1906.</p>
-      </section>
-    </div>
-  </body>
-</html>
-```
-
-### Custom Options
+#### Custom Options
 
 In this example, doT's it object is used to specify the location of script files and the main title of all pages; and the location of partials and templates is given. All pages in `pages/` will be compiled to `.html` files in `tmp`.
 
@@ -197,22 +144,11 @@ grunt.initConfig({
 })
 ```
 
-Running `grunt stencil` with these options will allow
-
-- all `.dot.html` files recursively found in `src/pages/` to be compiled to files of the same name in the `tmp` folder, but with an `.html` extension;
-- `{{= it.file_lists_scripts }}` to hold an array of all `.js` files in the `js` folder, that can be referenced from any partial, page or template;
-- partials and templates to be referenced without specifying the full path;
-- `{{= it.title }}` to be specified in any partial, template or page to get "Stencil".
-
----
-
-There are elaborate example input files and configurations available in this repository. All input files used for example compilation are in `test/data`. To visually see the inclusion relationships between different components, run `grunt stencil` in the root of this repository (or in `node_modules/grunt-stencil` if you've installed via npm), and examine the output files in `tmp` or open them in the browser.
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 
-- __version 0.0.3 - fix dependencies in `package.json`
+- __version 0.0.3__ (19th September, 2013) - fix dependencies in `package.json`
 - __version 0.0.2
 - __version 0.0.1__ (16th September, 2013)
