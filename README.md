@@ -30,12 +30,6 @@ grunt.loadNpmTasks('grunt-stencil');
 
 Stencil is a feature-rich Grunt plugin for compiling static HTML templates from given components, which supports [the doT.js templating language](http://olado.github.io/doT/index.html) as well as markdown. It is useful for modularizing your HTML source files, avoiding duplicate code, and passing any arbitrary variables or data to your templates.
 
-### Defining and using meta data headers
-
-All pages and partials can have meta data headers to pass arbitrary information to the template. At the moment, the headers need to be written in JSON, but the separator that specifies where the header ends and content begins can be customized in the options (by default, the file will be separated from the first occurrence of a blank line, the separator being `\n\n`). Meta data fields are appended to doT's it object, so if a page defines a `body_class`, it will be accessible from `it.body_class` in the template.
-
-Meta data fields can also be accessed by files that don't directly include the partial where the value is defined. For example, to include the field `contact_styles` from the partial `contact.dot.html` in  `footer.md`, one would use `{{= it.include('contact', 'contact_styles') }}`, and the value from that field will be included in the footer.
-
 ### Using doT and markdown
 
 doT expressions, HTML and markdown may be combined freely in any page or partial. The compiler will first convert any doT expressions that were found, and then runs the content through a markdown compiler, so the following code is a valid page:
