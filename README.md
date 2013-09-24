@@ -30,30 +30,6 @@ grunt.loadNpmTasks('grunt-stencil');
 
 Stencil is a feature-rich Grunt plugin for compiling static HTML templates from given components, which supports [the doT.js templating language](http://olado.github.io/doT/index.html) as well as markdown. It is useful for modularizing your HTML source files, avoiding duplicate code, and passing any arbitrary variables or data to your templates.
 
-### Using doT and markdown
-
-doT expressions, HTML and markdown may be combined freely in any page or partial. The compiler will first convert any doT expressions that were found, and then runs the content through a markdown compiler, so the following code is a valid page:
-
-```md
-{
-  "title": "Contact information",
-  "body_class": "contact",
-  "template": "default",
-}
-
-# Contact information
-
-{{= it.include('contact') }}
-
-<footer>
-  {{= it.include('footer') }}
-</footer>
-```
-
-It does need to be kept in mind that the markdown compiler will insert a `<p></p>` for newlines, and avoiding newlines results in decreased legibility, so care should be taken when extensively combining markdown and HTML.
-
-Finally, while specifying template and partial file extensions is optional (there is no difference between `{{= it.include('footer.md') }}` and `{{= it.include('footer') }}`), the markdown compiler will only be run if the extension of a given file is `.md`.
-
 ## Options
 
 Each of the following is optional.
