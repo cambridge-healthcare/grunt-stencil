@@ -5,7 +5,7 @@ Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates s
 - A way to modularise your HTML source files: each file can include an arbitrary number of partial files, or be wrapped with a template file.
 - Built in support for [the doT.js templating language](http://olado.github.io/doT/index.html), which allows passing of arbitrary variables to your HTML files.
 - Built in support for markdown
-- Meta data headers in the beginning of each file to specify variables that should be used in the file (that are accessible from partials included in the file, or templates the file is injected into).
+- Meta data headers in the beginning of each file to specify variables that should be used in the file (that are accessible from partials included in the file, and templates the file is injected into).
 
 ## Documentation
 
