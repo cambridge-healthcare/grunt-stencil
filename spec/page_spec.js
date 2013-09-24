@@ -26,45 +26,42 @@ describe("page", function () {
     return partials[path];
   }
 
-  it("compiles dot template", function () {
+  it("compiles dot files", function () {
     var text = randoms.word();
     expect(page('{{= "' + text + '" }}')).toEqual(text);
   });
 
-  it("passes header to template", function () {
+  it("passes data from the header to the content", function () {
     var title = randoms.word();
     var header = JSON.stringify({
       title: title
     });
 
     var content = '{{= it.title }}';
-
     expect(page(header + separator + content)).toEqual(title);
   });
 
-  it("includes partials", function () {
-    var content = '{{= it.include("asdf") }}';
+  describe("when it has 'include' statements", function() {
 
-    expect(page(content)).toEqual(partials.asdf);
-  });
+    it("includes partials", function () {
+      var content = '{{= it.include("asdf") }}';
+      expect(page(content)).toEqual(partials.asdf);
+    });
 
-  it("has partial's header fields available", function () {
-    var content = '{{= it.include("qwer").a }}';
-    expect(page(content)).toEqual('1');
-  });
+    it("has acces to meta data from included partials", function () {
+      var content = '{{= it.include("qwer").a }}';
+      expect(page(content)).toEqual('1');
+    });
 
-  it("compiles partials with doT", function () {
-    var content = '{{= it.include("dotted") }}';
-    expect(page(content)).toEqual('asdf');
-  });
+    it("compiles partials with doT", function () {
+      var content = '{{= it.include("dotted") }}';
+      expect(page(content)).toEqual('asdf');
+    });
 
-  it("partial's template access it's header", function () {
-    var content = '{{= it.include("dotted_w_header") }}';
-    expect(page(content)).toEqual('asdf');
-  });
+    it("can specify extra parameters to be passed to the partial", function () {
+      var content = '{{= it.include("dotted_w_params", {title:"asdf"}) }}';
+      expect(page(content)).toEqual('asdf');
+    });
 
-  it("partial can access extra properties passed in", function () {
-    var content = '{{= it.include("dotted_w_params", {title:"asdf"}) }}';
-    expect(page(content)).toEqual('asdf');
   });
 });
