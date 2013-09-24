@@ -11,7 +11,6 @@
 var separator = '\n\n';
 var source = require('../lib/source')(separator);
 
-
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('stencil', 'HTML compilation from separate components with doT and Markdown', stencil);
