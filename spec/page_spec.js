@@ -5,8 +5,8 @@ describe("page", function () {
 
   var source = require('../lib/source')(separator);
 
-  var process_file = function (process, file, params) {
-    return process(partials[file], params);
+  var process_file = function (processor, file, params) {
+    return processor(partials[file], params);
   };
 
   var page = require('../lib/page')({
