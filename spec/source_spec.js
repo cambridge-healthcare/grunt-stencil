@@ -44,38 +44,4 @@ describe("source", function () {
       })
     });
   });
-
-  describe(".parsed", function () {
-    describe("when accessing any field", function () {
-      it("shouldn't throw an error", function () {
-        expect(function () {
-          source.parsed('').asdf;
-        }).not.toThrow();
-      });
-    });
-
-    describe("when concatenating to any string", function () {
-      it("concatenates content in", function () {
-        var content = 'asdf';
-        expect('' + source.parsed(content)).toEqual(content);
-      });
-    });
-
-    describe("when there's no meta data", function () {
-      it("toString() returns given text", function () {
-        var content = 'fghjkl';
-        expect(source.parsed(content).toString()).toEqual(content);
-      });
-    });
-
-    describe("when there's meta data", function () {
-
-      var content = 'content';
-      var text = JSON.stringify(meta_data) + separator + content;
-
-      it("has access to any meta data field", function () {
-        expect(source.parsed(text).field).toEqual('value');
-      });
-    });
-  });
 });
