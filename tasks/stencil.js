@@ -9,7 +9,7 @@
  */
 
 var separator = '\n\n';
-var parse = require('../lib/parse')(separator);
+var file = require('../lib/file');
 
 module.exports = function(grunt) {
 
@@ -19,15 +19,13 @@ module.exports = function(grunt) {
 
     var options = this.options({
       partials: '.',
-      dot_it_obj: {}
+      dotvar: {},
+      dot_template_settings: {},
+      meta_data_separator: '\n\n'
     });
 
     var process_file = new (require('../lib/process_file'))({
-      read: function (file, folder) {
-        var pattern = folder + '/' + file;
-        if (!file.toString().match(/\.[0-9a-z]+$/i)) pattern += '.*';
-        return grunt.file.read(grunt.file.expand(pattern));
-      },
+      read: require('../lib/file').read,
       options: options
     });
 
