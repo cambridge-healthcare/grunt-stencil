@@ -16,20 +16,23 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('stencil', 'HTML compilation from separate components with doT and Markdown', stencil);
 
   function stencil () {
+
     var options = this.options({
-      partials: '.'
+      partials: '.',
+      dot_it_obj: {}
     });
 
-    var process_file = require('../lib/process_file')({
-      read: function (name) {
-        var pattern = options.partials + '/' + name + '.*';
+    var process_file = new (require('../lib/process_file'))({
+      read: function (file, folder) {
+        var pattern = folder + '/' + file;
+        if (!file.toString().match(/\.[0-9a-z]+$/i)) pattern += '.*';
         return grunt.file.read(grunt.file.expand(pattern));
-      }
+      },
+      options: options
     });
 
     this.files.forEach(function (mapping) {
-      var input_file = grunt.file.read(mapping.src);
-      var result = process_file(input_file);
+      var result = process_file(mapping.src).toString();
       grunt.file.write(mapping.dest, result);
     });
   }
