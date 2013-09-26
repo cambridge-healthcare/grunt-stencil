@@ -14,7 +14,7 @@ describe("process_file", function () {
 
     var process_file = process_file_setup({
       read: from_cache(partials),
-      process: function (x) { return x; }
+      processor: function (x) { return x; }
     });
 
     expect(process_file('asdf')).toEqual(partials.asdf);
@@ -28,7 +28,7 @@ describe("process_file", function () {
 
     var process_file = process_file_setup({
       read: from_cache(partials),
-      process: function (name) { return process_file(name); }
+      processor: function (name) { return process_file(name); }
     });
 
     expect(function () {
@@ -43,7 +43,7 @@ describe("process_file", function () {
 
     var process_file = process_file_setup({
       read: from_cache(partials),
-      process: function (x) { return x; }
+      processor: function (x) { return x; }
     });
 
     expect(process_file('asdf') + process_file('asdf'))

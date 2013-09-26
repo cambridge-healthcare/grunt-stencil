@@ -3,14 +3,14 @@ var randoms = require('./randoms');
 describe("page", function () {
   var separator = randoms.word();
 
-  var source = require('../lib/source')(separator);
+  var parse = require('../lib/parse')(separator);
 
   var process_file = function (processor, file, params) {
     return processor(partials[file], params);
   };
 
   var page = require('../lib/page')({
-    source: source,
+    parse: parse,
     process_file: process_file
   });
 
