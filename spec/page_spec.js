@@ -1,48 +1,81 @@
-var randoms = require('./randoms');
+var random = require('./random');
+var parse = require('../lib/parse')('\n\n');
 
 describe("page", function () {
-  var separator = randoms.word();
 
-  var parse = require('../lib/parse')(separator);
+  var page = require('../lib/page');
 
-  var process_file = function (processor, file, params) {
-    return processor(partials[file], params);
-  };
+  var compilers = [
+    {compile: function (x) { return "Compiling " + x; }},
+    {compile: function (x) { return "%" + x + "%"; }},
+    {compile: function (x) { return x + "!"; }}
+  ];
 
-  var page = require('../lib/page')({
-    parse: parse,
-    process_file: process_file
+  var input;
+  beforeEach(function() {
+    input = random.word();
   });
 
-  var partials = {
-    asdf: randoms.word(),
-    qwer: '{"a":1}',
-    dotted: '{{= "asdf" }}',
-    dotted_w_header: '{"title":"asdf"}' + separator + '{{= it.title }}',
-    dotted_w_params: '{{= it.title }}',
-    nested_include: '{{= it.include("asdf") }}'
-  };
+  it("compiles the input with a given function", function() {
+    var compile = page({
+      compilers: [compilers[0]],
+      parser: parse
+    });
+    expect(compile(input).toString()).toEqual("Compiling " + input);
+  });
 
-  function read_partial_source (path) {
-    return partials[path];
-  }
+  it("follows the order in which compilers are specified when compiling", function() {
+    var compile = page({
+      compilers: [compilers[0], compilers[1], compilers[2]],
+      parser: parse
+    });
+    expect(compile(input).toString()).toEqual("%Compiling " + input + "%!");
+  });
 
-  it("compiles dot files", function () {
-    var text = randoms.word();
+  it("uses dot's settings when compiling with dot", function() {
+    input = "{{= x.variable }}";
+    var compile = page({
+      compilers: [new (require('../lib/dot_compiler'))({
+        it: {variable: 123},
+        template_settings: {varname: "x"}
+      })],
+      parser: parse
+    });
+    expect(compile(input).toString()).toEqual("123");
+  });
+
+  it("has access to fields in the input's header", function() {
+    input = JSON.stringify({title: "asdf"}) + "\n\nContent";
+    var compile = page({parser: parse});
+    expect(compile(input).title).toEqual("asdf");
+  });
+
+  describe("when no compilers are given", function() {
+    it("returns the same string", function() {
+      var compile = page({parser: parse});
+      expect(compile(input).toString()).toEqual(input);
+    });
+  });
+
+
+//===============================================
+
+  xit("compiles dot files", function () {
+    var text = random.word();
     expect(page('{{= "' + text + '" }}')).toEqual(text);
   });
 
-  it("passes data from the header to the content", function () {
-    var title = randoms.word();
+  xit("passes data from the header to the content", function () {
+    var title = random.word();
     var header = JSON.stringify({
       title: title
     });
 
     var content = '{{= it.title }}';
-    expect(page(header + separator + content)).toEqual(title);
+    expect(page(header + content)).toEqual(title);
   });
 
-  describe("when it has an 'include' statement", function() {
+  xdescribe("when it has an 'include' statement", function() {
 
     it("includes a partial", function () {
       var content = '{{= it.include("asdf") }}';
