@@ -9,7 +9,7 @@
  */
 
 var separator = '\n\n';
-var source = require('../lib/source')(separator);
+var parse = require('../lib/parse')(separator);
 
 module.exports = function(grunt) {
 
@@ -22,19 +22,14 @@ module.exports = function(grunt) {
 
     var process_file = require('../lib/process_file')({
       read: function (name) {
-        var find_path = options.partials + '/' + name + '.*';
-        return grunt.file.read(grunt.file.expand(find_path));
+        var pattern = options.partials + '/' + name + '.*';
+        return grunt.file.read(grunt.file.expand(pattern));
       }
     });
 
-    var page = require('../lib/page')({
-      source: source,
-      process_file: process_file
-    });
-
     this.files.forEach(function (mapping) {
-      var src = grunt.file.read(mapping.src);
-      var result = page(src);
+      var input_file = grunt.file.read(mapping.src);
+      var result = process_file(input_file);
       grunt.file.write(mapping.dest, result);
     });
   }
