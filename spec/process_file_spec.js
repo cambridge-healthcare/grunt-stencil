@@ -1,8 +1,9 @@
- var random = require('./random');
-var file = require('../lib/file')
-var process_file_setup = require('../lib/process_file');
+"use strict";
 
-var trim = require('./trim');
+var random = require("./random");
+var file = require("../lib/file")
+var process_file_setup = require("../lib/process_file");
+var trim = require("./trim");
 
 describe("process_file", function () {
 
