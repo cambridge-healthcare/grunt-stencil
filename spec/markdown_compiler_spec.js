@@ -1,5 +1,6 @@
 "use strict";
 
+var random = require("./random");
 var trim = require("./trim");
 
 describe("markdown_compiler", function () {
@@ -19,7 +20,8 @@ describe("markdown_compiler", function () {
 
   describe("compile", function () {
     it("compiles markdown", function () {
-      expect(trim(compiler.compile("asdf"))).toEqual("<p>asdf</p>");
+      var content = random.word();
+      expect(trim(compiler.compile(content))).toEqual("<p>" + content + "</p>");
     });
   });
 });
