@@ -49,7 +49,6 @@ module.exports = function(grunt) {
     });
 
     this.files.forEach(function (mapping) {
-      console.log("Starting with " + mapping.src);
       var result = process_file(mapping.src).toString();
       grunt.file.write(mapping.dest, result);
     });
