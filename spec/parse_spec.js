@@ -1,3 +1,5 @@
+"use strict";
+
 describe("parse", function () {
   var separator = '\n\n';
   var meta_data = {
@@ -5,7 +7,7 @@ describe("parse", function () {
   };
   var content = "This is the content of a file.";
   var src = JSON.stringify(meta_data) + separator + content;
-  var parse = require('../lib/parse')(separator);
+  var parse = require("../lib/parse")(separator);
 
   describe(".content", function() {
     it("returns the contents of a given source as a string", function() {
@@ -39,7 +41,7 @@ describe("parse", function () {
     });
     describe("when the source begins with doT syntax", function () {
       it("returns an empty object", function () {
-        var src = '{{';
+        var src = "{{";
         expect(parse.header(src)).toEqual({});
       })
     });
