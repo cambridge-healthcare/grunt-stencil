@@ -5,6 +5,12 @@ var compilers_setup = require("../lib/compilers");
 
 describe("compilers", function() {
 
+  var prefix, affix;
+  beforeEach(function() {
+    prefix = random.word();
+    affix = random.word();
+  });
+
   it("compiles file", function () {
     var file_name = random.word();
     var content = random.word();
@@ -20,42 +26,44 @@ describe("compilers", function() {
     var compile = compilers_setup({
       read_content: function () { return ""; },
       compilers: [{
-        compile: function (x) { return x + "asdf"; },
+        compile: function (x) { return x + affix; },
         applies_to: function (input_file) { return true; }
       }, {
-        compile: function (x) { return x + "qwer"; },
+        compile: function (x) { return prefix + x; },
         applies_to: function (input_file) { return true; }
       }]
     });
 
-    expect(compile()).toEqual("asdfqwer");
+    expect(compile()).toEqual(prefix + affix);
   });
 
   it("executes only matching compilers", function () {
     var compile = compilers_setup({
       read_content: function () { return ""; },
       compilers: [{
-        compile: function (x) { return x + "asdf"; },
+        compile: function (x) { return x + affix; },
         applies_to: function (input_file) { return false; }
       }, {
-        compile: function (x) { return x + "qwer"; },
+        compile: function (x) { return prefix + x; },
         applies_to: function (input_file) { return true; }
       }]
     });
 
-    expect(compile()).toEqual("qwer");
+    expect(compile()).toEqual(prefix);
   });
 
   it("passes extra params to compilers", function () {
+    var content = random.word();
+    var param = random.word();
     var compile = compilers_setup({
-      read_content: function () { return "asdf"; },
+      read_content: function () { return content; },
       compilers: [{
         compile: function (x, params) { return x + params; },
         applies_to: function (input_file) { return true; }
       }]
     });
 
-    expect(compile(null, "qwer")).toEqual("asdfqwer");
+    expect(compile(null, param)).toEqual(content + param);
   });
 
 });
