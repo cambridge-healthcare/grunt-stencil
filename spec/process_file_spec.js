@@ -128,13 +128,13 @@ describe("process_file", function () {
 
   describe("when the page defines a template", function() {
 
-    var template_name    = random.word(),
-        page_placeholder = random.word(),
+    var template_name    = "template_name",
+        page_placeholder = "page_placeholder",
         template_content = template_name + page_placeholder;
 
-    var page_name    = random.word(),
-        page_content = random.word(),
-        page_param   = random.word();
+    var page_name    = "page_name",
+        page_content = "page_content",
+        page_param   = "page_param";
 
     function compile_template (name, params) {
       return template_content.replace(page_placeholder, page_content);
@@ -147,7 +147,7 @@ describe("process_file", function () {
           return filename === page_name ? {template: template_name} : {};
         },
         compile: function (name, params) {
-          return name === page_name ? page_content : compile_template(params);
+          return name === page_name ? page_content : compile_template(name, params);
         },
         find_closest_match: function (folder, name) { return name; }
       });
@@ -161,7 +161,7 @@ describe("process_file", function () {
           return {template: template_name};
         },
         compile: function (name, params) {
-          return name === page_name ? page_content : compile_template(params);
+          return name === page_name ? page_content : compile_template(name, params);
         },
         find_closest_match: function (folder, name) { return name; }
       });
@@ -169,18 +169,39 @@ describe("process_file", function () {
       expect(function() {process_file(page_name)}).toThrow(circular_error);
     });
 
-    it("has access to the meta data defined in the page", function() {
+    it("the page has access to the meta data defined in the page", function() {
       var process_file = process_file_setup({
         read_header: function (filename) {
           return filename === page_name ? {template: template_name, param: page_param} : {};
         },
         compile: function (name, params) {
-          return name === page_name ? page_content : compile_template(params);
+          return name === page_name ? page_content : compile_template(name, params);
         },
         find_closest_match: function (folder, name) { return name; }
       });
 
       expect(process_file(page_name).param).toEqual(page_param);
+    });
+
+    it("the template has access to the meta data defined in the page", function() {
+      var param_placeholder = "param_placeholder";
+      template_content = template_name + page_placeholder + param_placeholder;
+
+      var process_file = process_file_setup({
+        read_header: function (filename) {
+          return filename === page_name ? {template: template_name, param: page_param} : {};
+        },
+        compile: function (name, params) {
+          if(name === page_name) return page_content;
+          else {
+            return template_content.replace(page_placeholder, page_content)
+                                   .replace(param_placeholder, params.param);
+          }
+        },
+        find_closest_match: function (folder, name) { return name; }
+      });
+
+      expect(process_file(page_name).toString()).toEqual(template_name + page_content + page_param);
     });
 
   });
