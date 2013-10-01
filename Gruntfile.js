@@ -16,6 +16,7 @@ module.exports = function(grunt) {
       all: {
         options: {
           partials: 'spec/includes',
+          templates: 'spec/templates',
           dot_template_settings: {
             strip: true
           },
