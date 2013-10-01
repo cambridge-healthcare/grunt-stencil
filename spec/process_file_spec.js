@@ -7,6 +7,8 @@ var trim = require("./trim");
 
 describe("process_file", function () {
 
+  var circular_error = new Error("Circular dependency detected.");
+
   describe("when converted to a string", function() {
     it("returns the contents of a file", function () {
       var content = random.word();
@@ -66,7 +68,7 @@ describe("process_file", function () {
         find_closest_match: function (folder, name) { return name; }
       });
 
-      expect(function () { process_file(partial_name); }).toThrow(new Error("Circular dependency detected."));
+      expect(function () { process_file(partial_name); }).toThrow(circular_error);
     });
 
     it("allows including the same partial twice in one file", function () {
@@ -99,14 +101,18 @@ describe("process_file", function () {
 
   describe("when the page defines a template", function() {
 
+    var template_name    = random.word(),
+        page_placeholder = random.word(),
+        template_content = template_name + page_placeholder;
+
+    var page_name    = random.word(),
+        page_content = random.word();
+
+    function compile_template (name, params) {
+      return template_content.replace(page_placeholder, page_content);
+    };
+
     it("the page placeholder is replaced with the compiled page in the given template", function() {
-
-      var template_name    = random.word(),
-          page_placeholder = random.word(),
-          template_content = template_name + page_placeholder;
-
-      var page_name    = random.word(),
-          page_content = random.word();
 
       var process_file = process_file_setup({
         read_header: function (filename) {
@@ -118,16 +124,24 @@ describe("process_file", function () {
         find_closest_match: function (folder, name) { return name; }
       });
 
-      function compile_template (name, params) {
-        return template_content.replace(page_placeholder, page_content);
-      };
-
       expect(process_file(page_name).toString()).toEqual(template_name + page_content);
     });
 
     it("detects circular dependencies in templates", function() {
+      var process_file = process_file_setup({
+        read_header: function (filename) {
+          return {template: template_name};
+        },
+        compile: function (name, params) {
+          return name === page_name ? page_content : compile_template(params);
+        },
+        find_closest_match: function (folder, name) { return name; }
+      });
 
+      expect(function() {process_file(page_name)}).toThrow(circular_error);
     });
+
+    it("")
 
   });
 
