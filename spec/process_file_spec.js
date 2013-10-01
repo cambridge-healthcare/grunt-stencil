@@ -106,7 +106,8 @@ describe("process_file", function () {
         template_content = template_name + page_placeholder;
 
     var page_name    = random.word(),
-        page_content = random.word();
+        page_content = random.word(),
+        page_param   = random.word();
 
     function compile_template (name, params) {
       return template_content.replace(page_placeholder, page_content);
@@ -141,7 +142,19 @@ describe("process_file", function () {
       expect(function() {process_file(page_name)}).toThrow(circular_error);
     });
 
-    it("")
+    it("has access to the meta data defined in the page", function() {
+      var process_file = process_file_setup({
+        read_header: function (filename) {
+          return filename === page_name ? {template: template_name, param: page_param} : {};
+        },
+        compile: function (name, params) {
+          return name === page_name ? page_content : compile_template(params);
+        },
+        find_closest_match: function (folder, name) { return name; }
+      });
+
+      expect(process_file(page_name).param).toEqual(page_param);
+    });
 
   });
 
