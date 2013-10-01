@@ -99,15 +99,33 @@ describe("process_file", function () {
 
   describe("when the page defines a template", function() {
 
-    it("the compiled page is injected into the given template", function() {
+    it("the page placeholder is replaced with the compiled page in the given template", function() {
 
-    };
+      var template_name    = random.word(),
+          page_placeholder = random.word(),
+          template_content = template_name + page_placeholder;
 
-    it("detects circular dependencies in templates", function() {
+      var page_name    = random.word(),
+          page_content = random.word();
 
+      var process_file = process_file_setup({
+        read_header: function (filename) {
+          return filename === page_name ? {template: template_name} : {};
+        },
+        compile: function (name, params) {
+          return name === page_name ? page_content : compile_template(params);
+        },
+        find_closest_match: function (folder, name) { return name; }
+      });
+
+      function compile_template (name, params) {
+        return template_content.replace(page_placeholder, page_content);
+      };
+
+      expect(process_file(page_name).toString()).toEqual(template_name + page_content);
     });
 
-    it("the value of the result is the compiled contents of the template with the page", function() {
+    it("detects circular dependencies in templates", function() {
 
     });
 
