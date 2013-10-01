@@ -92,7 +92,34 @@ describe("process_file", function () {
     describe("when the included partial defines a template", function() {
 
       it("returns the compiled page with the compiled partial wrapped inside given template", function() {
+        var template_name       = random.word(),
+            partial_placeholder = random.word(),
+            template_content    = template_name + partial_placeholder;
 
+        var page_name    = random.word(),
+            page_content = random.word();
+
+        var partial_name    = random.word(),
+            partial_content = random.word();
+
+        var process_file = process_file_setup({
+          read_header: function (filename) {
+            return filename === partial_name ? {template: template_name} : {}; },
+          compile: function (name, params) {
+            if (name === page_name) {
+              return page_content + params.include(partial_name);
+            }
+            else if (name === partial_name) {
+              return partial_content;
+            }
+            else {
+              return template_content.replace(partial_placeholder, partial_content);
+            }
+          },
+          find_closest_match: function (folder, name) { return name; }
+        });
+
+        expect(process_file(page_name).toString()).toEqual(page_content + template_name + partial_content);
       });
 
     });
