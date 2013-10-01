@@ -35,8 +35,9 @@ describe("process_file", function () {
     });
   });
 
-  describe("when the file includes partial(s)", function() {
-    it("contains compiled content of the partial", function () {
+  describe("when the page includes partial(s)", function() {
+
+    it("contains the compiled content of the partial", function () {
       var partial_content = random.word();
       var partial_name = random.word();
       var page_name = random.word();
@@ -85,5 +86,31 @@ describe("process_file", function () {
 
       expect(function () { process_file(page_name); }).not.toThrow();
     });
+
+    describe("when the included partial defines a template", function() {
+
+      it("returns the compiled page with the compiled partial wrapped inside given template", function() {
+
+      });
+
+    });
+
   });
+
+  describe("when the page defines a template", function() {
+
+    it("the compiled page is injected into the given template", function() {
+
+    };
+
+    it("detects circular dependencies in templates", function() {
+
+    });
+
+    it("the value of the result is the compiled contents of the template with the page", function() {
+
+    });
+
+  });
+
 });
