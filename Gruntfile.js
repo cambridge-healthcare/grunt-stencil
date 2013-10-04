@@ -13,16 +13,24 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     stencil: {
-      fixtures: {
+      all: {
         options: {
-          includes: 'spec/includes'
+          partials: 'spec/includes',
+          templates: 'spec/templates',
+          dot_template_settings: {
+            strip: true
+          },
+          vars: {
+            parameter: 'value'
+          }
         },
         files: [{
           expand: true,
           cwd: 'spec/fixtures',
-          src: '*.dot.html',
+          src: '*.html',
           dest: 'tmp',
-          ext: '.html'
+          ext: '.html',
+          flatten: true
         }]
       }
     }
