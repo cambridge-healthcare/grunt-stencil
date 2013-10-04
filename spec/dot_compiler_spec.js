@@ -1,7 +1,7 @@
 "use strict";
 
 var random = require("./random");
-var dot_compiler_setup = require('../lib/dot_compiler');
+var dot_compiler_setup = require("../lib/dot_compiler");
 
 describe("dot_compiler", function() {
   describe("compile", function () {
@@ -9,7 +9,7 @@ describe("dot_compiler", function() {
     it("compiles dot templates", function() {
       var compiler = dot_compiler_setup({});
       var word = random.word();
-      var content = "{{= '" + word + "' }}";
+      var content = "{{= \"" + word + "\" }}";
       expect(compiler.compile(content)).toEqual(word);
     });
 

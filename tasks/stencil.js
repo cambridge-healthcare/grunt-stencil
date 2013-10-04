@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*
  * grunt-stencil
@@ -8,25 +8,25 @@
  * Licensed under the MIT license.
  */
 
-var file = require('../lib/file');
+var file = require("../lib/file");
 
-var parse_setup = require('../lib/parse');
-var compilers_setup = require('../lib/compilers');
-var process_file_setup = require('../lib/process_file');
+var parse_setup = require("../lib/parse");
+var compilers_setup = require("../lib/compilers");
+var process_file_setup = require("../lib/process_file");
 
-var _ = require('underscore');
+var _ = require("underscore");
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('stencil', 'HTML compilation from separate components with doT and Markdown', stencil);
+  grunt.registerMultiTask("stencil", "HTML compilation from separate components with doT and Markdown", stencil);
 
   function stencil () {
 
     var options = this.options({
-      partials: '.',
+      partials: ".",
       dotvar: {},
       dot_template_settings: {},
-      meta_data_separator: '\n\n'
+      meta_data_separator: "\n\n"
     });
 
     var parse = parse_setup(options.meta_data_separator);
@@ -34,14 +34,14 @@ module.exports = function(grunt) {
     var compile =  compilers_setup({
       read_content: _.compose(parse.content, grunt.file.read),
       compilers: [
-        require('../lib/dot_compiler')({
+        require("../lib/dot_compiler")({
           template_settings: options.dot_template_settings
         }),
-        require('../lib/markdown_compiler')
+        require("../lib/markdown_compiler")
       ]
     });
 
-    var process_file = new (require('../lib/process_file'))({
+    var process_file = new (require("../lib/process_file"))({
       options: options,
       compile: compile,
       read_header: _.compose(parse.header, grunt.file.read),
