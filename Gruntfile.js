@@ -22,21 +22,21 @@ module.exports = function (grunt) {
     stencil: {
       fixtures: {
         options: {
-          partials: 'spec/includes',
-          templates: 'spec/templates',
+          partials: "spec/includes",
+          templates: "spec/templates",
           dot_template_settings: {
             strip: true
           },
           vars: {
-            parameter: 'value'
+            parameter: "value"
           }
         },
         files: [{
           expand: true,
-          cwd: 'spec/fixtures',
-          src: '*.html',
-          dest: 'tmp',
-          ext: '.html',
+          cwd: "spec/fixtures",
+          src: "*.html",
+          dest: "tmp",
+          ext: ".html",
           flatten: true
         }]
       }

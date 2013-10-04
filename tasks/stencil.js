@@ -41,7 +41,7 @@ module.exports = function(grunt) {
       ]
     });
 
-    var process_file = new (require("../lib/process_file"))({
+    var process_file = new process_file_setup({
       options: options,
       compile: compile,
       read_header: _.compose(parse.header, grunt.file.read),
