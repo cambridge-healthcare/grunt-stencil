@@ -5,7 +5,7 @@ var fs = require("fs");
 
 describe("stencil task", function () {
   it("all fixtures have expected result", function (done) {
-    exec("grunt stencil:all", function (error, stdout, stderr) {
+    exec("grunt clean stencil:fixtures", function (error, stdout, stderr) {
       expect(function () {
         if (error && error.code) {
           throw Error(stdout + stderr);
