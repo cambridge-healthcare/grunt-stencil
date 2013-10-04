@@ -1,1 +1,0 @@
-This is the page *footer*, in markdown.
