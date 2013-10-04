@@ -16,7 +16,7 @@ describe("process_file", function () {
       var process_file = process_file_setup({
         read_header: function () { return {}; },
         compile: function () { return content; },
-        find_closest_match: function () { return ''; }
+        find_closest_match: function () { return ""; }
       });
 
       expect(process_file().toString()).toEqual(content);
@@ -29,8 +29,8 @@ describe("process_file", function () {
 
       var process_file = process_file_setup({
         read_header: function () { return { title: title }; },
-        compile: function () { return ''; },
-        find_closest_match: function () { return ''; }
+        compile: function () { return ""; },
+        find_closest_match: function () { return ""; }
       });
 
       expect(process_file().title).toEqual(title);
@@ -121,9 +121,7 @@ describe("process_file", function () {
 
         expect(process_file(page_name).toString()).toEqual(page_content + template_name + partial_content);
       });
-
     });
-
   });
 
   describe("when the page defines a template", function() {
@@ -203,7 +201,5 @@ describe("process_file", function () {
 
       expect(process_file(page_name).toString()).toEqual(template_name + page_content + page_param);
     });
-
   });
-
 });

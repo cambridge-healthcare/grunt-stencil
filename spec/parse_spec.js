@@ -1,7 +1,7 @@
 "use strict";
 
 describe("parse", function () {
-  var separator = '\n\n';
+  var separator = "\n\n";
   var meta_data = {
     field: "value"
   };
@@ -16,7 +16,7 @@ describe("parse", function () {
 
     it("returns an empty string if the source consisted only of meta data", function() {
       src = JSON.stringify(meta_data);
-      expect(parse.content(src)).toEqual('');
+      expect(parse.content(src)).toEqual("");
     });
 
     describe("when source has no meta data", function(){

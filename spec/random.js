@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require("underscore");
 
 module.exports = {
   word: random_word
@@ -6,7 +6,7 @@ module.exports = {
 
 function random_word () {
   var word =
-    _.shuffle('qwertyuiopasdfghjklzxcvbnm').join('')
+    _.shuffle("qwertyuiopasdfghjklzxcvbnm").join("")
     .substring(0, 5 + Math.round(Math.random() * 10));
   return word;
 }
