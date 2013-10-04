@@ -91,7 +91,7 @@ describe("process_file", function () {
 
     describe("when the included partial defines a template", function() {
 
-      it("returns the compiled page with the compiled partial wrapped inside given template", function() {
+      it("the partial is wrapped in the template", function() {
         var template_name       = random.word(),
             partial_placeholder = random.word(),
             template_content    = template_name + partial_placeholder;
@@ -124,7 +124,7 @@ describe("process_file", function () {
     });
   });
 
-  describe("when the page defines a template", function() {
+  describe("when a page defines a template", function() {
 
     var template_name    = "template_name",
         page_placeholder = "page_placeholder",
@@ -138,7 +138,7 @@ describe("process_file", function () {
       return template_content.replace(page_placeholder, page_content);
     };
 
-    it("the page placeholder is replaced with the compiled page in the given template", function() {
+    it("the page is wrapped in the template", function() {
 
       var process_file = process_file_setup({
         read_header: function (filename) {
@@ -167,7 +167,7 @@ describe("process_file", function () {
       expect(function() {process_file(page_name)}).toThrow(circular_error);
     });
 
-    it("the page has access to the meta data defined in the page", function() {
+    it("the wrapped page exposes its header fields", function() {
       var process_file = process_file_setup({
         read_header: function (filename) {
           return filename === page_name ? {template: template_name, param: page_param} : {};
