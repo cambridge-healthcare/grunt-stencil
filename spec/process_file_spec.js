@@ -193,7 +193,7 @@ describe("process_file", function () {
           if(name === page_name) return page_content;
           else {
             return template_content.replace(page_placeholder, page_content)
-                                   .replace(param_placeholder, params.param);
+                                   .replace(param_placeholder, params.document.param);
           }
         },
         find_closest_match: function (folder, name) { return name; }
