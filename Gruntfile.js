@@ -11,10 +11,13 @@
 module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-shell");
 
   grunt.loadTasks("tasks");
 
-  grunt.registerTask("default", ["clean", "stencil", "jshint"]);
+  grunt.registerTask("default", ["test", "jshint"]);
+  grunt.registerTask("test", ["clean", "shell:jasmine"]);
+  grunt.registerTask("testv", ["clean", "shell:jasmine_verbose"]);
 
   // Project configuration.
   grunt.initConfig({
@@ -27,7 +30,7 @@ module.exports = function (grunt) {
           dot_template_settings: {
             strip: true
           },
-          vars: {
+          env: {
             parameter: "value"
           }
         },
@@ -51,6 +54,18 @@ module.exports = function (grunt) {
       options: {
         jshintrc: ".jshintrc",
       },
+    },
+
+    shell: {
+      options: {
+        stdout: true
+      },
+      jasmine: {
+        command: "node_modules/.bin/jasmine-node spec"
+      },
+      jasmine_verbose: {
+        command: "node_modules/.bin/jasmine-node --verbose spec"
+      }
     },
 
     clean: {

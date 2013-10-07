@@ -41,9 +41,16 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt": "~0.4.1",
     "marked": "*",
-    "jasmine-node": "latest"
+    "jasmine-node": "latest",
+    "grunt-shell": "~0.4.0"
   },
   "keywords": [
-    "gruntplugin", "templating", "markdown", "dot", "HTML generation", "generating HTML", "templates"
+    "gruntplugin",
+    "templating",
+    "markdown",
+    "dot",
+    "HTML generation",
+    "generating HTML",
+    "templates"
   ]
 }
