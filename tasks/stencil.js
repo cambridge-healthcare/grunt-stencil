@@ -24,7 +24,8 @@ module.exports = function(grunt) {
 
     var options = this.options({
       partials: ".",
-      dotvar: {},
+      templates: ".",
+      env: {},
       dot_template_settings: {},
       meta_data_separator: "\n\n"
     });
