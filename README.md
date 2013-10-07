@@ -38,42 +38,29 @@ Each of the following is optional.
 Type: `Object`
 Default value: `{}`
 
-An object that specifies the template settings that are passed to the doT compiler as `dot.templateSettings` (see [doT.js](http://olado.github.io/doT/index.html)).
+An object that specifies the template settings that are passed to the doT compiler (see [doT.js](http://olado.github.io/doT/index.html)).
 
-#### options.dot_it_object
+#### options.env
 Type: `Object`
 Default value: `{}`
 
-An object passed to all input files that will be accessible using `{{= it.key }}` (see [doT.js](http://olado.github.io/doT/index.html)).
+Initial environment seen by all compiler, doT.js sees it as `it`. This environment is for each file with their header fields.
 
-#### options.dot_it_object.file_lists
-Type: `Object'`
-Default value: `{}`
-
-An object of file matching patterns passed to all input files that is intended to be used for automated filepath generation. All keys should map to Arrays with two values that are used as arguments for [grunt.file.expand](https://github.com/gruntjs/grunt/wiki/grunt.file#gruntfileexpand) --- the first is an object with optional settings for `expand`, and the second is the actual pattern. For example, specifying
-
-```
-file_lists: {
-  stylesheets: [{cwd: 'styles'}, '*.css']
-}
-```
-will result in `it.file_lists.stylesheets` being evaluated to `['main.css', 'links.css']` (assuming these two files were present in the `styles` folder). See above for an example of how to define all style tags with a single doT expression.
-
-#### options.templates_folder
+#### options.templates
 Type: `String`
-Default value: `''`
+Default value: `"."`
 
 A String value specifying the location of all templates. When specified, this will allow to call templates in pages' meta data without the full path to it (the specified `templates_folder` will be prepended).
 
-#### options.partials_folder
+#### options.partials
 Type: `String`
-Default value: `''`
+Default value: `"."`
 
 A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
 
-#### options.meta_data_sep
+#### options.meta_data_separator
 Type: `String`
-Default value: `\n\n`
+Default value: `"\n\n"`
 
 A String value specifying the characters to search for when separating meta data from the content of a file. By default, the JSON header of a file is considered to end after the first blank line in the file.
 
@@ -98,21 +85,6 @@ grunt.initConfig({
 
 [Grunt's rules for defining target and destination files](https://github.com/gruntjs/grunt/wiki/Configuring-tasks#files) apply, but care needs to be taken to make sure each input page maps to a single output file.
 
-#### Default Options
-In this example, the default options are used.
-
-```js
-grunt.initConfig({
-  stencil: {
-    main: // task target name
-    options: {},
-    files: {
-      'dist/index.html': ['pages/index.dot.html'],
-    },
-  },
-})
-```
-
 #### Custom Options
 
 In this example, doT's it object is used to specify the location of script files and the main title of all pages; and the location of partials and templates is given. All pages in `pages/` will be compiled to `.html` files in `tmp`.
@@ -122,22 +94,19 @@ grunt.initConfig({
   stencil: {
     main: {
       options: {
-        dot_it_object: {
+        env: {
           title: "Stencil",
-          file_lists: {
-            scripts: [{}, 'js/*.js']
-          }
-        }
-        partials_folder: 'content',
-        templates_folder: 'templates'
+        },
+        partials: "content",
+        templates: "templates"
       },
       files: [
         {
           expand: true,
-          cwd: 'src/pages/',
-          src: '**/*.dot.html',
-          dest: 'tmp',
-          ext: '.html',
+          cwd: "src/pages/",
+          src: "**/*.dot.html",
+          dest: "tmp",
+          ext: ".html",
           flatten: true
         }
       ]
@@ -147,10 +116,15 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). Please ignore W092 errors (wrapping regexps). The warning will show up until there's an option to disable it in jshint.
+
+You can runt the test suite with `grunt test` or `grunt testv` for more verbose output.
 
 ## Release History
 
+- __version 1.0.0__ (7th October, 2013) - first stable release
+- __version 0.1.0__ (4th October, 2013) - big refactor and change of specification
 - __version 0.0.3__ (19th September, 2013) - fix dependencies in `package.json`
 - __version 0.0.2__
 - __version 0.0.1__ (16th September, 2013)
