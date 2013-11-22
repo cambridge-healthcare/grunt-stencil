@@ -153,7 +153,7 @@ describe("process_file", function () {
       expect(process_file(page_name).toString()).toEqual(template_name + page_content);
     });
 
-    it("detects circular dependencies in templates", function() {
+    it("prevents circular dependencies in templates", function() {
       var process_file = process_file_setup({
         read_header: function (filename) {
           return {template: template_name};
@@ -164,7 +164,7 @@ describe("process_file", function () {
         find_closest_match: function (folder, name) { return name; }
       });
 
-      expect(function() {process_file(page_name)}).toThrow(circular_error);
+      expect(process_file(page_name).toString()).toEqual(template_name + page_content);
     });
 
     it("the wrapped page exposes its header fields", function() {
