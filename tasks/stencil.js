@@ -27,6 +27,7 @@ module.exports = function(grunt) {
       templates: ".",
       env: {},
       dot_template_settings: {},
+      template_map: [],
       meta_data_separator: "\n\n"
     });
 
@@ -46,7 +47,8 @@ module.exports = function(grunt) {
       options: options,
       compile: compile,
       read_header: _.compose(parse.header, grunt.file.read),
-      find_closest_match: file.find_closest_match
+      find_closest_match: file.find_closest_match,
+      file_template_map: file.file_template_map_setup(options.template_map)
     });
 
     this.files.forEach(function (mapping) {
