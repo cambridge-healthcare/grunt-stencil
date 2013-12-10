@@ -27,6 +27,10 @@ module.exports = function (grunt) {
         options: {
           partials: "spec/includes",
           templates: "spec/templates",
+          template_map: [{
+            files: "*_default",
+            template: "default"
+          }],
           dot_template_settings: {
             strip: true
           },
