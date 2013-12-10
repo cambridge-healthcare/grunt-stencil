@@ -132,6 +132,8 @@ If you take a look at any file in `lib/` you can notice that there's no dependen
 
 ## Release History
 
+- __version 1.0.2__ (10th December, 2013) - Windows compatibility
+- __version 1.0.1__ (24th November, 2013) - fix for new markdown version
 - __version 1.0.0__ (7th October, 2013) - first stable release
 - __version 0.1.0__ (4th October, 2013) - big refactor and change of specification
 - __version 0.0.3__ (19th September, 2013) - fix dependencies in `package.json`
