@@ -4,6 +4,7 @@ var random = require("./random");
 var file = require("../lib/file")
 var process_file_setup = require("../lib/process_file");
 var trim = require("./trim");
+var noop = function () {};
 
 describe("process_file", function () {
 
@@ -16,7 +17,8 @@ describe("process_file", function () {
       var process_file = process_file_setup({
         read_header: function () { return {}; },
         compile: function () { return content; },
-        find_closest_match: function () { return ""; }
+        find_closest_match: function () { return ""; },
+        resolve_template: noop
       });
 
       expect(process_file().toString()).toEqual(content);
@@ -30,7 +32,8 @@ describe("process_file", function () {
       var process_file = process_file_setup({
         read_header: function () { return { title: title }; },
         compile: function () { return ""; },
-        find_closest_match: function () { return ""; }
+        find_closest_match: function () { return ""; },
+        resolve_template: noop
       });
 
       expect(process_file().title).toEqual(title);
@@ -51,7 +54,8 @@ describe("process_file", function () {
         compile: function (name, params) {
           return name === page_name ? page(params) : partial_content;
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(process_file(page_name).toString()).toEqual(partial_content);
@@ -65,7 +69,8 @@ describe("process_file", function () {
         compile: function (name, params) {
           return params.include(partial_name);
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(function () { process_file(partial_name); }).toThrow(circular_error);
@@ -83,7 +88,8 @@ describe("process_file", function () {
             params.include(partial_name);
           }
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(function () { process_file(page_name); }).not.toThrow();
@@ -116,7 +122,8 @@ describe("process_file", function () {
               return template_content.replace(partial_placeholder, partial_content);
             }
           },
-          find_closest_match: function (folder, name) { return name; }
+          find_closest_match: function (folder, name) { return name; },
+          resolve_template: noop
         });
 
         expect(process_file(page_name).toString()).toEqual(page_content + template_name + partial_content);
@@ -147,7 +154,8 @@ describe("process_file", function () {
         compile: function (name, params) {
           return name === page_name ? page_content : compile_template(name, params);
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(process_file(page_name).toString()).toEqual(template_name + page_content);
@@ -161,7 +169,8 @@ describe("process_file", function () {
         compile: function (name, params) {
           return name === page_name ? page_content : compile_template(name, params);
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(function() {process_file(page_name)}).toThrow(circular_error);
@@ -175,7 +184,8 @@ describe("process_file", function () {
         compile: function (name, params) {
           return name === page_name ? page_content : compile_template(name, params);
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(process_file(page_name).param).toEqual(page_param);
@@ -196,7 +206,8 @@ describe("process_file", function () {
                                    .replace(param_placeholder, params.document.param);
           }
         },
-        find_closest_match: function (folder, name) { return name; }
+        find_closest_match: function (folder, name) { return name; },
+        resolve_template: noop
       });
 
       expect(process_file(page_name).toString()).toEqual(template_name + page_content + page_param);
