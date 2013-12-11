@@ -28,7 +28,7 @@ module.exports = function(grunt) {
       env: {},
       dot_template_settings: {},
       template_map: [],
-      meta_data_separator: "\n\n"
+      meta_data_separator: /\r?\n\r?\n/
     });
 
     var parse = parse_setup(options.meta_data_separator);

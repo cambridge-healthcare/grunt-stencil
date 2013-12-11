@@ -8,6 +8,11 @@
 
 "use strict";
 
+
+var JASMINE_CMD = (process.platform === "win32"
+                   ? "\"node_modules/.bin/jasmine-node.cmd\""
+                   : "node_modules/.bin/jasmine-node");
+
 module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-contrib-clean");
@@ -61,10 +66,10 @@ module.exports = function (grunt) {
         stdout: true
       },
       jasmine: {
-        command: "node_modules/.bin/jasmine-node spec"
+        command: JASMINE_CMD + " spec"
       },
       jasmine_verbose: {
-        command: "node_modules/.bin/jasmine-node --verbose spec"
+        command: JASMINE_CMD + " --verbose spec"
       }
     },
 

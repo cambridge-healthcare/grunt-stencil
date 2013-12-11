@@ -59,8 +59,8 @@ Default value: `"."`
 A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
 
 #### options.meta_data_separator
-Type: `String`
-Default value: `"\n\n"`
+Type: `String | RexExp`
+Default value: `/\r?\n\r?\n/`
 
 A String value specifying the characters to search for when separating meta data from the content of a file. By default, the JSON header of a file is considered to end after the first blank line in the file.
 
@@ -119,10 +119,21 @@ grunt.initConfig({
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). Please ignore W092 errors (wrapping regexps). The warning will show up until there's an option to disable it in jshint.
 
-You can runt the test suite with `grunt test` or `grunt testv` for more verbose output.
+You can run the test suite with `grunt test` or `grunt testv` for more verbose output.
+
+Each new feature ough to have full test coverage. We usually start by writing a fixture which is a pair of two file: the one to process (the fixture) and it's expected output.
+Fixture are html or md files in `spec/fixtures`. Any partials and templates required by this fixture should be stored in `spec/partials` and `spec/templates`, respectively. The expected output of a fixture should be put in `spec/expected`.
+
+Once we run tests and the fixture is failing, we can implement any necessary feature by starting with writing specs (unit tests) in the `spec` directory, (like `spec/my_new_feature_spec.js`) and then implementing it in `lib` directory (`lib/my_new_feature.js`).
+
+Once all the unit tests pass, we can integrate new code back to the task with making the fixture test pass in mind :) .
+
+If you take a look at any file in `lib/` you can notice that there's no dependencies between modules. All dependencies are injected in the task file `tasks/stencil.js`. That's the place where the integration happens.
 
 ## Release History
 
+- __version 1.0.2__ (10th December, 2013) - Windows compatibility
+- __version 1.0.1__ (24th November, 2013) - fix for new markdown version
 - __version 1.0.0__ (7th October, 2013) - first stable release
 - __version 0.1.0__ (4th October, 2013) - big refactor and change of specification
 - __version 0.0.3__ (19th September, 2013) - fix dependencies in `package.json`
