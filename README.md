@@ -50,13 +50,13 @@ Initial environment seen by all compiler, doT.js sees it as `it`. This environme
 Type: `String`
 Default value: `"."`
 
-A String value specifying the location of all templates. When specified, this will allow to call templates in pages' meta data without the full path to it (the specified `templates_folder` will be prepended).
+A String value specifying the location of all templates. When specified, this will allow to call templates in pages' meta data without the full path to it (the specified `templates` will be prepended).
 
 #### options.partials
 Type: `String`
 Default value: `"."`
 
-A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials_folder` will be prepended).
+A String value specifying the location of all partials. When specified, this will allow to call partial `include` functions without the full path (the specified `partials` will be prepended).
 
 #### options.meta_data_separator
 Type: `String | RexExp`
