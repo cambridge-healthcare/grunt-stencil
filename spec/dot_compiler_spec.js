@@ -38,12 +38,13 @@ describe("dot_compiler", function() {
     var compiler = dot_compiler_setup({});
 
     it("returns true for a dot path", function () {
-      expect(compiler.applies_to("file.dot")).toEqual(true);
-      expect(compiler.applies_to("file.dot.md.haml")).toEqual(true);
+      expect(compiler.applies_to("file.dot.md")).toEqual(true);
+      expect(compiler.applies_to("file.html")).toEqual(true);
     });
 
+
     it("returns false for a non-dot path", function () {
-      expect(compiler.applies_to("file.html")).toEqual(false);
+      expect(compiler.applies_to("file.asdf")).toEqual(false);
     });
   });
 });
