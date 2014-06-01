@@ -12,19 +12,22 @@ describe("stencil task", function () {
         }
 
         var expected_dir = "spec/expected";
+        var tmp_dir = "tmp";
+
         fs.readdirSync(expected_dir).forEach(function (name) {
           expect(
-            name + ":" + strip(fs.readFileSync("tmp/" + name, "utf8"))
+            name + ":" + strip(fs.readFileSync(tmp_dir + "/" + name, "utf8"))
           ).toEqual(
-            name + ":" + strip(fs.readFileSync("spec/expected/" + name, "utf8"))
+            name + ":" + strip(fs.readFileSync(expected_dir + "/" + name, "utf8"))
           );
         });
       }).not.toThrow();
+
       done();
     });
   });
 });
 
 function strip (str) {
-  return str.replace(/(^\s+)|(\s+$)/g, "");
+  return str.replace(/\s*\n\s*/g, "");
 }
