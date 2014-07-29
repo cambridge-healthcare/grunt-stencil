@@ -1,3 +1,71 @@
+# Zetzer
+
+Zetzer is an HTML template engine.
+
+Features!
+
+- pages, templates and partials
+- [doT][dot] templates in HTML input
+- [Markdown][markdown] input (with optional doT processing)
+- optional JSON headers for metadata
+- grunt and broccoli plugins
+
+"Zetzer" ("setzer" in German, "zecer" in Polish) used to be a
+profession where a person would manually compose a page for a printing
+press by arranging metal fonts on a matrix. Interesting fact: the
+zetzer would see the page mirrored left-right while working on it so
+they had to master reading in this weird form.
+
+## Main concepts
+
+Zetzer has three main concepts: page, template and partial. Each of
+them can declare a JSON header for some extra info. Header's metadata
+is accessible from within the document as {{= it.field_name }}. The
+header is divided from content by one empty line.
+
+One of special header fields is `template` which declares the template
+that current document will be wrapped with. A template can be declared
+for a page, a partial and even for another template. (Possible
+circular wrapping will be detected.)
+
+### Pages
+
+**Pages** are starting points of the compilation. For each input page
+(either HTML or Markdown) document there will be exactly one output
+HTML document.
+
+### Templates
+
+**Templates** wrap around the content of a **page**, partial** or
+another **template**. Inside a template, invoking contents of the
+wrapped document is made by:
+
+    {{= it.document }}
+
+We can access wrapped document's header by naming its fields like:
+
+    {{= it.document.title }}
+
+### Partials
+
+Includes can be invoked by name (extension can be omitted) from any
+other **partial**, **page** or **template**:
+
+    {{= it.include("navigation", { option: "value" }) }}
+
+We can pass extra options to the partial that will appear on the `it`
+inside the partial. A partial can have a template. This means it will
+be wrapped in that template before putting it in the document that
+requested it.
+
+## Usage
+
+
+
+---
+
+old readme
+
 # grunt-stencil
 
 Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates static HTML files from given components. Stencil provides the following:
