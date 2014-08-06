@@ -1,5 +1,7 @@
 # grunt-stencil
 
+**Deprecated!** [Zetzer](https://github.com/brainshave/zetzer) is the continuation of this project. It's compatible and all further development will happen there.
+
 Stencil is a [Grunt](http://gruntjs.com/) plugin for templating that generates static HTML files from given components. Stencil provides the following:
 
 - A way to modularise your HTML source files: each file can include an arbitrary number of partial files, or be wrapped with a template file.
