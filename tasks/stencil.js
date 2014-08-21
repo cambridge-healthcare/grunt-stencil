@@ -13,6 +13,7 @@ var file = require("../lib/file");
 var parse_setup = require("../lib/parse");
 var compilers_setup = require("../lib/compilers");
 var process_file_setup = require("../lib/process_file");
+var template_resolver_setup = require("../lib/template_resolver");
 
 var _ = require("underscore");
 
@@ -27,6 +28,7 @@ module.exports = function(grunt) {
       templates: ".",
       env: {},
       dot_template_settings: {},
+      template_map: [],
       meta_data_separator: /\r?\n\r?\n/
     });
 
@@ -42,11 +44,14 @@ module.exports = function(grunt) {
       ]
     });
 
+    var resolve_template = template_resolver_setup(options.template_map);
+
     var process_file = new process_file_setup({
       options: options,
       compile: compile,
       read_header: _.compose(parse.header, grunt.file.read),
-      find_closest_match: file.find_closest_match
+      find_closest_match: file.find_closest_match,
+      resolve_template: resolve_template
     });
 
     this.files.forEach(function (mapping) {

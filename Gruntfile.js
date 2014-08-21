@@ -37,7 +37,13 @@ module.exports = function (grunt) {
           },
           env: {
             parameter: "value"
-          }
+          },
+          template_map: [
+            {
+              match: 'spec/fixtures/with_mapped_template.html',
+              template: 'default'
+            }
+          ]
         },
         files: [{
           expand: true,
