@@ -30,6 +30,10 @@ module.exports = function(grunt) {
       meta_data_separator: /\r?\n\r?\n/
     });
 
+    if ("string" === typeof options.env) {
+      options.env = grunt.file.readJSON(options.env);
+    }
+
     var parse = parse_setup(options.meta_data_separator);
 
     var compile =  compilers_setup({
